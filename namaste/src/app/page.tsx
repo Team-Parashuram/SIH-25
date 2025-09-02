@@ -1,7 +1,8 @@
 const page = () => {
   return (
     <div>
-      Hi
+      <h1>Namaste</h1>
+      <p>Welcome to the Namaste page!</p>
     </div>
   )
 }
