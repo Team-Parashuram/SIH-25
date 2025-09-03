@@ -49,11 +49,18 @@ Existing platforms like:
 ## Government Requirements
 
 The government seeks a solution that:
+Expected Solution
 
-- **Personalizes Recommendations**: Suggests 3-5 internships based on a student's profile  
-- **Ensures Accessibility**: Mobile-friendly and supports regional languages  
 - **Maintains Simplicity**: Intuitive UI with minimal text and visual cues  
+- **Ensures Accessibility**: Mobile-friendly and supports regional languages  
+- **Personalizes Recommendations**: Suggests 3-5 internships based on a student's profile  
 - **Integrates Seamlessly**: Can be added to the PM Internship Scheme portal without complex deployment  
+
+• Has a simple, intuitive UI with minimal text and visual cues
+• Uses a rule-based or ML-light model to suggest 3-5 top internships
+• Can be accessed on mobile devices and adapted to regional language use
+• Captures basic candidate inputs (education, skills, sector interests, location)
+• Outputs recommendations in a clear, user-friendly format (e.g., cards or simple list)
 
 ---
 
@@ -69,4 +76,4 @@ Efforts being made to bridge these gaps include:
 
 ## Summary
 
-The key challenge is to **enable equitable access to internships for first-generation learners** from remote areas. A **lightweight, intuitive, and mobile-friendly AI-based recommendation engine** is needed to guide students toward opportunities that match their skills, interests, and location preferences.
+The key challenge is to **enable equitable access to internships for first-generation learners** from remote areas. A **lightweight, intuitive, and mobile-friendly AI-based recommendation engine** is needed to guide students toward opportunities that match their skills, interests, and location preferences.The tool must be simple enough to be integrated with the existing PM Internship Scheme portal and must avoid complex or resource-intensive deployment.
