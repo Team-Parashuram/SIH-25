@@ -1,0 +1,21 @@
+
+/*
+First get your token from - https://icdaccessmanagement.who.int/connect/token
+In body then Form-encode set up :- 
+grant_type = client_credentials
+scope = icdapi_access 
+Then in Auth set up:- 
+username: <your client id>
+password: <your client secret>
+client id and client secret you will ge from - https://icdapihome2-eme0b9bdf4fafkbg.northeurope-01.azurewebsites.net/icdapi
+
+Then use your token here :- 
+https://id.who.int/icd/entity/257068234 
+Here 257068234 is the entity ID which in this case is Cholera 
+In this in Auth header use Bearer <your_token>
+In headers add :- 
+API-Version:v2
+Accept: application/json
+Accept-Language: en
+Then make the get request, you will get the result...
+*/
