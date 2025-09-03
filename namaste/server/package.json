@@ -10,7 +10,12 @@
     "build": "tsc",
     "format": "prettier --write ."
   },
-  "keywords": ["express", "typescript", "server", "namaste"],
+  "keywords": [
+    "express",
+    "typescript",
+    "server",
+    "namaste"
+  ],
   "author": "Team Cursor",
   "license": "MIT",
   "packageManager": "pnpm@10.15.0",

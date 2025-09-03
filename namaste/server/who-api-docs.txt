@@ -4,6 +4,7 @@ First get your token from - https://icdaccessmanagement.who.int/connect/token
 In body then Form-encode set up :- 
 grant_type = client_credentials
 scope = icdapi_access 
+
 Then in Auth set up:- 
 username: <your client id>
 password: <your client secret>
@@ -17,6 +18,7 @@ In headers add :-
 API-Version:v2
 Accept: application/json
 Accept-Language: en
+
 Then make the get request, you will get the result...
 Result is in this format :- 
 {
@@ -76,4 +78,10 @@ Result is in this format :-
     "http://id.who.int/icd/entity/911707612"
   ]
 }
+
+
+
+WHO Ayurveda Terminologies pdf link :- https://iris.who.int/bitstream/handle/10665/365543/9789240064935-eng.pdf?sequence=1
+
 */
+
