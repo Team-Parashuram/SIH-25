@@ -5,7 +5,7 @@
   "main": "src/server.ts",
   "type": "module",
   "scripts": {
-    "dev": "ts-node src/server.ts",
+    "dev": "tsx src/server.ts",
     "start": "node dist/server.js",
     "build": "tsc",
     "format": "prettier --write ."
@@ -28,6 +28,7 @@
     "@types/node": "^20.19.11",
     "prettier": "^3.6.2",
     "ts-node": "^10.9.2",
+    "tsx": "^4.20.5",
     "typescript": "^5.9.2"
   }
 }

@@ -4,6 +4,9 @@
     "outDir": "./dist",
     "rootDir": "./src",
     "strict": true,
-    "esModuleInterop": true
-  }
+    "esModuleInterop": true,
+    "module": "ESNext",
+    "moduleResolution": "node"
+  },
+  
 }
