@@ -7,7 +7,7 @@ scope = icdapi_access
 Then in Auth set up:- 
 username: <your client id>
 password: <your client secret>
-client id and client secret you will ge from - https://icdapihome2-eme0b9bdf4fafkbg.northeurope-01.azurewebsites.net/icdapi
+client id and client secret you will get from - https://icdapihome2-eme0b9bdf4fafkbg.northeurope-01.azurewebsites.net/icdapi
 
 Then use your token here :- 
 https://id.who.int/icd/entity/257068234 
@@ -18,4 +18,62 @@ API-Version:v2
 Accept: application/json
 Accept-Language: en
 Then make the get request, you will get the result...
+Result is in this format :- 
+{
+  "@context": "http://id.who.int/icd/contexts/contextForFoundationEntity.json",
+  "@id": "http://id.who.int/icd/entity/257068234",
+  "parent": [
+    "http://id.who.int/icd/entity/135352227"
+  ],
+  "child": [
+    "http://id.who.int/icd/entity/1170831944",
+    "http://id.who.int/icd/entity/1205958647",
+    "http://id.who.int/icd/entity/581614179",
+    "http://id.who.int/icd/entity/1972085775"
+  ],
+  "browserUrl": "https://icd.who.int/browse/2025-01/foundation/en#257068234",
+  "title": {
+    "@language": "en",
+    "@value": "Cholera"
+  },
+  "synonym": [
+    {
+      "label": {
+        "@language": "en",
+        "@value": "cholera syndrome"
+      }
+    },
+    {
+      "label": {
+        "@language": "en",
+        "@value": "asiatic cholera"
+      }
+    },
+    {
+      "label": {
+        "@language": "en",
+        "@value": "epidemic cholera"
+      }
+    }
+  ],
+  "definition": {
+    "@language": "en",
+    "@value": "Cholera is a potentially epidemic and life-threatening infection of the intestine, characterised by extreme watery (secretory) diarrhoea often accompanied by vomiting, with rapid depletion of body fluids and salt that may result in hypovolemic shock and acidosis. Cholera outbreaks are caused by toxigenic strains of Vibrio cholerae serogroups O1 and O139. Serogroup O1 has two biovars; classical and eltor. Vibrio cholerae O1, biovar cholerae is classical type. Vibrio cholerae O1, biovar eltor is eltor type."
+  },
+  "inclusion": [
+    {
+      "label": {
+        "@language": "en",
+        "@value": "cholera syndrome"
+      }
+    }
+  ],
+  "fullySpecifiedName": {
+    "@language": "en",
+    "@value": "Intestinal infection due to Vibrio cholerae"
+  },
+  "relatedEntitiesInPerinatalChapter": [
+    "http://id.who.int/icd/entity/911707612"
+  ]
+}
 */
