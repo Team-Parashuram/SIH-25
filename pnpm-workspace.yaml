@@ -1,0 +1,8 @@
+packages:
+  - internship
+  - namaste
+
+ignoredBuiltDependencies:
+  - '@tailwindcss/oxide'
+  - sharp
+  - unrs-resolver
