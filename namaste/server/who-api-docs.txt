@@ -80,8 +80,8 @@ Result is in this format :-
 }
 
 
-
 WHO Ayurveda Terminologies pdf link :- https://iris.who.int/bitstream/handle/10665/365543/9789240064935-eng.pdf?sequence=1
-
+WHO-IDC-11 of ayush website :- https://namaste.ayush.gov.in/icd11
+WHO-IDC-11 of ayush website :- https://namaste.ayush.gov.in/icd10
 */
 
