@@ -449,12 +449,7 @@ export default function SignInPage() {
           )}
         </AnimatePresence>
 
-        {/* Demo footer */}
-        <div className="text-center mt-6 text-sm text-white/80 bg-white/10 backdrop-blur-sm rounded-2xl py-3 px-6 border border-white/20">
-          <p>
-            <strong>UI DEMONSTRATION</strong> • Hardcoded flows for presentation • Modern Government Portal Design
-          </p>
-        </div>
+
       </div>
     </div>
   );
