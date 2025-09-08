@@ -1,6 +1,7 @@
+
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '../hooks/useAuth';
 import LoginForm from '../components/auth/LoginForm';
 import OTPVerification from '../components/auth/OTPVerification';
@@ -27,6 +28,34 @@ export default function Home() {
   const [userName, setUserName] = useState('User');
 
   const recommendationService = RecommendationService.getInstance();
+
+  const loadRecommendations = useCallback(async (profileData: ProfileFormData) => {
+    try {
+      setRecLoading(true);
+      
+      const request = {
+        userId: user?.id || 'anonymous',
+        profile: {
+          education: profileData.education.map(edu => ({
+            level: edu.level,
+            course: edu.course || '',
+            specialization: edu.specialization || ''
+          })),
+          skills: profileData.skills,
+          sectorInterests: profileData.sectorInterests,
+          locationPreferences: profileData.locationPreferences
+        }
+      };
+
+      const recs = await recommendationService.getRecommendations(request);
+      setRecommendations(recs);
+    } catch (error) {
+      console.error('Failed to load recommendations:', error);
+      alert('Failed to load recommendations. Please try again.');
+    } finally {
+      setRecLoading(false);
+    }
+  }, [user?.id, recommendationService]);
 
   useEffect(() => {
     console.log('Auth state changed:', { isAuthenticated, user, loading, currentStep });
@@ -57,7 +86,7 @@ export default function Home() {
           setProfile(parsedProfile);
           setCurrentStep('recommendations');
           loadRecommendations(parsedProfile);
-        } catch (error) {
+        } catch {
           setCurrentStep('aadhaar');
         }
       } else {
@@ -71,16 +100,16 @@ export default function Home() {
           setProfile(parsedProfile);
           setCurrentStep('recommendations');
           loadRecommendations(parsedProfile);
-        } catch (error) {
+        } catch {
           setCurrentStep('profile');
         }
       } else {
         setCurrentStep('profile');
       }
     }
-  }, [isAuthenticated, user, loading]);
+  }, [isAuthenticated, user, loading, loadRecommendations, currentStep]);
 
-  const handleLogin = async (data: any) => {
+  const handleLogin = async (data: { phoneNumber: string }) => {
     try {
       setAuthLoading(true);
       console.log('Starting login process...');
@@ -96,12 +125,12 @@ export default function Home() {
     }
   };
 
-  const handleOTPVerification = async (data: any) => {
+  const handleOTPVerification = async (data: { otp: string; phoneNumber?: string }) => {
     try {
       setAuthLoading(true);
       const otpData = {
         ...data,
-        phoneNumber: pendingPhoneNumber || data.phoneNumber
+        phoneNumber: pendingPhoneNumber || data.phoneNumber || ''
       };
       await verifyOTP(otpData);
       setCurrentStep('aadhaar');
@@ -113,7 +142,7 @@ export default function Home() {
     }
   };
 
-  const handleAadhaarVerification = async (data: any) => {
+  const handleAadhaarVerification = async (data: { aadhaarNumber: string; otp: string }) => {
     try {
       setAuthLoading(true);
       await verifyAadhaar(data);
@@ -151,34 +180,6 @@ export default function Home() {
       alert('Failed to save profile. Please try again.');
     } finally {
       setProfileLoading(false);
-    }
-  };
-
-  const loadRecommendations = async (profileData: ProfileFormData) => {
-    try {
-      setRecLoading(true);
-      
-      const request = {
-        userId: user?.id || 'anonymous',
-        profile: {
-          education: profileData.education.map(edu => ({
-            level: edu.level,
-            course: edu.course || '',
-            specialization: edu.specialization || ''
-          })),
-          skills: profileData.skills,
-          sectorInterests: profileData.sectorInterests,
-          locationPreferences: profileData.locationPreferences
-        }
-      };
-
-      const recs = await recommendationService.getRecommendations(request);
-      setRecommendations(recs);
-    } catch (error) {
-      console.error('Failed to load recommendations:', error);
-      alert('Failed to load recommendations. Please try again.');
-    } finally {
-      setRecLoading(false);
     }
   };
 

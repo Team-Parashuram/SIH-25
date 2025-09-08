@@ -469,7 +469,7 @@ export class RecommendationService {
       phoneNumber: '',
       education: request.profile.education.map((edu, index) => ({
         id: index.toString(),
-        level: edu.level as any,
+        level: edu.level as '10th' | '12th' | 'Diploma' | 'Graduation' | 'PostGraduation' | 'ITI',
         boardOrUniversity: '',
         institute: '',
         course: edu.course,

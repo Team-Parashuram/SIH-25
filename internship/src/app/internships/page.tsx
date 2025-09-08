@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '../../hooks/useAuth';
 import { Internship } from '../../types/internship';
 import { RecommendationService } from '../../services/recommendations';
@@ -21,6 +21,26 @@ export default function AllInternshipsPage() {
   const [userName, setUserName] = useState('User');
 
   const recommendationService = RecommendationService.getInstance();
+
+  const loadInternships = useCallback(async () => {
+    try {
+      setLoading(true);
+      const filterData = {
+        sector: filters.sector || undefined,
+        location: filters.location || undefined,
+        minStipend: filters.minStipend ? parseInt(filters.minStipend) : undefined,
+        maxStipend: filters.maxStipend ? parseInt(filters.maxStipend) : undefined,
+        internshipType: filters.internshipType || undefined
+      };
+      
+      const data = await recommendationService.getAllInternships(filterData);
+      setInternships(data);
+    } catch (error) {
+      console.error('Failed to load internships:', error);
+    } finally {
+      setLoading(false);
+    }
+  }, [filters, recommendationService]);
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -44,27 +64,7 @@ export default function AllInternshipsPage() {
     }
 
     loadInternships();
-  }, [isAuthenticated, router, user]);
-
-  const loadInternships = async () => {
-    try {
-      setLoading(true);
-      const filterData = {
-        sector: filters.sector || undefined,
-        location: filters.location || undefined,
-        minStipend: filters.minStipend ? parseInt(filters.minStipend) : undefined,
-        maxStipend: filters.maxStipend ? parseInt(filters.maxStipend) : undefined,
-        internshipType: filters.internshipType || undefined
-      };
-      
-      const data = await recommendationService.getAllInternships(filterData);
-      setInternships(data);
-    } catch (error) {
-      console.error('Failed to load internships:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  }, [isAuthenticated, router, user, loadInternships]);
 
   const handleApply = (internshipId: string) => {
     alert(`Application submitted for internship ${internshipId}! You will be redirected to the PM Internship Portal.`);

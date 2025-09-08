@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import { LoginFormData } from '../../types/auth';
 
 interface LoginFormProps {
@@ -39,10 +40,12 @@ export default function LoginForm({ onSubmit, loading = false }: LoginFormProps)
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
       <div className="bg-white rounded-xl shadow-lg p-8 w-full max-w-md">
         <div className="text-center mb-8">
-          <img 
+          <Image 
             src="/Intern.png" 
             alt="PM Internship Portal" 
-            className="mx-auto mb-4 h-16 w-16"
+            width={64}
+            height={64}
+            className="mx-auto mb-4"
           />
           <h1 className="text-2xl font-bold text-gray-900 mb-2">PM Internship Portal</h1>
           <p className="text-gray-600 text-sm">Find your perfect internship opportunity</p>

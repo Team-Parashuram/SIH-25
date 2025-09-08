@@ -53,7 +53,7 @@ export default function RecommendationList({
         </div>
         <h3 className="text-lg font-medium text-gray-900 mb-2">No Recommendations Found</h3>
         <p className="text-gray-600 mb-4">
-          We couldn't find any internships matching your profile. Try updating your skills or preferences.
+          We couldn&apos;t find any internships matching your profile. Try updating your skills or preferences.
         </p>
         <button
           onClick={onRefresh}

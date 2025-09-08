@@ -35,7 +35,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             user,
             loading: false
           });
-        } catch (error) {
+        } catch {
           localStorage.removeItem('pm_internship_user');
           setAuthState({
             isAuthenticated: false,
@@ -66,7 +66,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       // In a real app, this would trigger OTP sending
       console.log('OTP sent to:', data.phoneNumber);
       
-    } catch (error) {
+    } catch {
       throw new Error('Failed to send OTP');
     }
   };

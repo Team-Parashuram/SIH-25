@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { ProfileFormData, Address, Education } from '../../types/profile';
+import { ProfileFormData } from '../../types/profile';
 
 interface ProfileFormProps {
   onSubmit: (data: ProfileFormData) => void;
@@ -23,8 +23,6 @@ const genders = [
   { value: 'F', label: 'Female' },
   { value: 'T', label: 'Transgender' }
 ];
-
-const educationLevels = ['10th', '12th', 'Diploma', 'Graduation', 'PostGraduation', 'ITI'];
 
 export default function ProfileForm({ onSubmit, initialData, loading = false }: ProfileFormProps) {
   const [formData, setFormData] = useState<ProfileFormData>({
@@ -57,7 +55,6 @@ export default function ProfileForm({ onSubmit, initialData, loading = false }: 
 
   const [currentStep, setCurrentStep] = useState(1);
   const [skillInput, setSkillInput] = useState('');
-  const [errors, setErrors] = useState<any>({});
 
   const handleAddSkill = () => {
     if (skillInput.trim() && !formData.skills.includes(skillInput.trim())) {
@@ -133,7 +130,7 @@ export default function ProfileForm({ onSubmit, initialData, loading = false }: 
           </label>
           <select
             value={formData.gender}
-            onChange={(e) => setFormData(prev => ({ ...prev, gender: e.target.value as any }))}
+            onChange={(e) => setFormData(prev => ({ ...prev, gender: e.target.value as 'M' | 'F' | 'T' }))}
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           >
             {genders.map(gender => (
@@ -148,7 +145,7 @@ export default function ProfileForm({ onSubmit, initialData, loading = false }: 
           </label>
           <select
             value={formData.category}
-            onChange={(e) => setFormData(prev => ({ ...prev, category: e.target.value as any }))}
+            onChange={(e) => setFormData(prev => ({ ...prev, category: e.target.value as 'SC' | 'ST' | 'OBC' | 'General' }))}
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           >
             {categories.map(category => (
