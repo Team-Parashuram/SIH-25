@@ -1,4 +1,4 @@
-# Tech
+# Technology
 
 Short answer: Replace Twilio/Clerk with Aadhaar eKYC via DigiLocker flow, auto-fill demographics from eKYC, then collect remaining profile, education, bank (Aadhaar‑seeded), skills, and communication preferences. Below is a production flow and data model aligned with PMIS manuals and Aadhaar rules.[1][2]
 

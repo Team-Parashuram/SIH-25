@@ -4,7 +4,7 @@ import sys
 from pathlib import Path
 
 # --- Configuration ---
-NUM_RECORDS_TO_GENERATE = 100000
+NUM_RECORDS_TO_GENERATE = 1000
 OUTPUT_FILENAME = "final_internships.json"
 INPUT_FILES = {
     "sectors": "sector.txt",
