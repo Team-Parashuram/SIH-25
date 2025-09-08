@@ -52,6 +52,7 @@ export interface HealthResponse {
     timestamp: string;
     version: string;
     environment: string;
+    database?: string;
 }
 
 export interface ApiInfoResponse {
@@ -61,5 +62,8 @@ export interface ApiInfoResponse {
         health: string;
         whoToken: string;
         whoEntity: string;
+        namasteUpload?: string;
+        namasteStats?: string;
+        namasteSystems?: string;
     };
 }

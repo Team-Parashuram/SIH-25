@@ -84,5 +84,90 @@ WHO ICD API docs :- https://icd.who.int/docs/icd-api/API-Authentication/
 WHO Ayurveda Terminologies pdf link :- https://iris.who.int/bitstream/handle/10665/365543/9789240064935-eng.pdf?sequence=1
 WHO-IDC-11 of ayush website :- https://namaste.ayush.gov.in/icd11
 WHO-IDC-11 of ayush website :- https://namaste.ayush.gov.in/icd10
+
+
+
+
+
+
+Setting up prisma :- 
+pnpm add prisma @prisma/client
+npx prisma init
+npx prisma generate
+npx prisma migrate dev --name init
+
+
+What is Code field in generated table ? 
+
+Code Field Analysis :-
+EF-2.2.11 (SM8D)  → surAmehaH      (ayurveda)
+EF-2.2.12 (SM8D)  → lavaNamehaH    (ayurveda) 
+EF-2.2.13 (SM8D)  → piShTamehaH    (ayurveda)
+EF-2.2.14 (SM8D)  → PenamehaH      (ayurveda)
+EF-2.3 (SM8D)     → [incomplete]    (ayurveda)
+
+EF-2.2.11 (SM8D)
+│  │ │ │   │
+│  │ │ │   └── Source identifier (SM8D)
+│  │ │ └────── Sub-category level 3
+│  │ └──────── Sub-category level 2  
+│  └────────── Main category level 1
+└──────────── System prefix (EF = likely "Essential Features")
+
+Ayurveda System Codes:
+EF-2.2.11 = surAmehaH (सुरामेहः) - "wine diabetes/urination"
+EF-2.2.12 = lavaNamehaH (लवणमेहः) - "salt diabetes/urination"
+EF-2.2.13 = piShTamehaH (पिष्टमेहः) - "flour diabetes/urination"
+EF-2.2.14 = PenamehaH (फेनमेहः) - "frothy diabetes/urination"
+
+[PREFIX]-[MAJOR].[MINOR].[SUB] ([SOURCE])
+
+Examples:
+- EF-2.2.11 (SM8D)
+- DIS-1.3.5 (AYUSH)
+- O-6 (UNANI)
+
+Ayurveda Codes:
+  EF- prefix = Essential Features/Elements
+  Format: EF-X.Y.Z (SM8D)
+  Represents: Hierarchical classification of Ayurvedic conditions
+
+Siddha Codes:
+  NAMC_CODE from Siddha Excel
+  Format: Similar hierarchical structure
+  Represents: Tamil traditional medicine terminology
+
+Unani Codes:
+  NUMC_CODE from Unani Excel (Note: Different prefix)
+  Format: O-X or similar patterns
+
+
+Routes :- 
+
+WHO Integration
+GET http://localhost:3000/api/v1/who/token
+GET http://localhost:3000/api/v1/who/entity/some-id
+
+
+File Upload
+POST http://localhost:3000/api/v1/namaste/upload
+
+
+Code Retrieval
+GET http://localhost:3000/api/v1/namaste/codes/ayurveda?page=1&limit=20
+GET http://localhost:3000/api/v1/namaste/codes/ayurveda/AA
+GET http://localhost:3000/api/v1/namaste/codes/siddha/LAC1.3
+
+
+Search & Discovery
+GET http://localhost:3000/api/v1/namaste/search?q=k&limit=10
+GET http://localhost:3000/api/v1/namaste/autocomplete?q=k&limit=5
+GET http://localhost:3000/api/v1/namaste/random?count=10
+
+
+System Information
+GET http://localhost:3000/api/v1/namaste/systems
+GET http://localhost:3000/api/v1/namaste/stats
+
 */
 

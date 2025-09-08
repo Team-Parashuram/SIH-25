@@ -5,8 +5,10 @@ import express from 'express';
 import cors from 'cors';
 import { Request, Response } from 'express';
 import { router as whoRoutes } from './routers/who.routes.js';
+import { router as namasteRoutes } from './routers/namaste.routes.js';
 import { ApiResponse } from './utils/response.util.js';
 import { HealthResponse, ApiInfoResponse } from './types/who.types.js';
+import DatabaseClient from './database/client.js';
 import logger from './utils/logger.js';
 import morgan from 'morgan';
 
@@ -24,18 +26,29 @@ app.use(morgan('combined', {
     },
 }));
 
-app.get('/health', (req: Request, res: Response) => {
+app.get('/health', async (req: Request, res: Response) => {
+    const dbHealthy = await DatabaseClient.healthCheck();
+    
     const healthData: HealthResponse = {
-        status: 'healthy',
+        status: dbHealthy ? 'healthy' : 'unhealthy',
         timestamp: new Date().toISOString(),
         version: '1.0.0',
-        environment: process.env.NODE_ENV || 'development'
+        environment: process.env.NODE_ENV || 'development',
+        database: dbHealthy ? 'connected' : 'disconnected'
     };
-    logger.info('Health check requested');
-    return ApiResponse.success(res, healthData, 'NAMASTE WHO API Server is running!');
+    
+    logger.info(`Health check requested - DB: ${dbHealthy ? 'healthy' : 'unhealthy'}`);
+    
+    if (dbHealthy) {
+        return ApiResponse.success(res, healthData, 'NAMASTE WHO API Server is running!');
+    } else {
+        return ApiResponse.error(res, 'Database connection failed', 'Health check failed', 503);
+    }
 });
 
 app.use('/api/v1/who', whoRoutes);
+app.use('/api/v1/namaste', namasteRoutes);
+
 app.get('/', (req: Request, res: Response) => {
     const apiInfo: ApiInfoResponse = {
         name: 'NAMASTE - FHIR Compliant WHO ICD-11 Integration API',
@@ -43,7 +56,10 @@ app.get('/', (req: Request, res: Response) => {
         endpoints: {
             health: '/health',
             whoToken: '/api/v1/who/token',
-            whoEntity: '/api/v1/who/entity/:entityId'
+            whoEntity: '/api/v1/who/entity/:entityId',
+            namasteUpload: '/api/v1/namaste/upload',
+            namasteStats: '/api/v1/namaste/stats',
+            namasteSystems: '/api/v1/namaste/systems'
         }
     };
     logger.info('Root endpoint accessed');
@@ -54,7 +70,22 @@ app.get('/', (req: Request, res: Response) => {
 //     return ApiResponse.notFound(res, `The route ${req.method} ${req.originalUrl} does not exist`);
 // });
 
+// Initialize database connection and start server
+async function startServer() {
+    try {
+        // Connect to database
+        await DatabaseClient.connect();
+        
+        // Start the server
+        app.listen(port, () => {
+            console.log(`🚀 NAMASTE Server is running on port ${port}`);
+            logger.info(`Server started on port ${port} with database connection`);
+        });
+        
+    } catch (error) {
+        logger.error('Failed to start server:', error);
+        process.exit(1);
+    }
+}
 
-app.listen(port, () => {
-    console.log(`🚀 NAMASTE Server is running on port ${port}`);
-});
+startServer();

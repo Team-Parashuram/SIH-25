@@ -10,10 +10,6 @@ NAMASTE is a FHIR R4-compliant terminology microservice that integrates India's 
 - ✅ Basic WHO API Integration
   - Token generation (`POST /api/v1/who/token`)
   - Entity lookup (`GET /api/v1/who/entity/:entityId`)
-- ✅ Professional API response structure with `ApiResponse<T>`
-- ✅ Environment configuration management
-- ✅ Structured logging system with Winston
-- ✅ Express server with CORS and middleware setup
 
 ## 🔴 Critical Missing Components
 
