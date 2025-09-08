@@ -70,18 +70,13 @@ app.get('/', (req: Request, res: Response) => {
 //     return ApiResponse.notFound(res, `The route ${req.method} ${req.originalUrl} does not exist`);
 // });
 
-// Initialize database connection and start server
 async function startServer() {
     try {
-        // Connect to database
         await DatabaseClient.connect();
-        
-        // Start the server
         app.listen(port, () => {
             console.log(`🚀 NAMASTE Server is running on port ${port}`);
             logger.info(`Server started on port ${port} with database connection`);
         });
-        
     } catch (error) {
         logger.error('Failed to start server:', error);
         process.exit(1);
