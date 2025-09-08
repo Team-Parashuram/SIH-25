@@ -107,6 +107,37 @@ export default function InternshipCard({
         </div>
       )}
 
+      {/* Certifications and Special Requirements */}
+      {(internship.certification_name.length > 0 || internship.special_requirements.length > 0) && (
+        <div className="mb-6">
+          {internship.certification_name.length > 0 && (
+            <div className="mb-3">
+              <h4 className="text-sm font-bold text-black mb-2">📜 Preferred Certifications</h4>
+              <div className="flex flex-wrap gap-2">
+                {internship.certification_name.map((cert, index) => (
+                  <span key={index} className="bg-blue-50 text-blue-700 px-2 py-1 rounded text-xs">
+                    {cert}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+          
+          {internship.special_requirements.length > 0 && (
+            <div>
+              <h4 className="text-sm font-bold text-black mb-2">⚠️ Special Requirements</h4>
+              <div className="flex flex-wrap gap-2">
+                {internship.special_requirements.map((req, index) => (
+                  <span key={index} className="bg-red-50 text-red-700 px-2 py-1 rounded text-xs">
+                    {req}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+
       {/* Opportunities */}
       <div className="flex items-center justify-between mb-6">
         <span className="text-sm text-black font-semibold">
@@ -117,13 +148,13 @@ export default function InternshipCard({
       {/* Actions */}
       <div className="flex space-x-3">
         <button
-          onClick={() => onViewDetails?.(internship.id)}
+          onClick={() => onViewDetails?.(internship.id || '')}
           className="flex-1 bg-white text-black border-2 border-gray-300 py-3 px-4 rounded-lg font-semibold hover:border-orange-500 hover:text-orange-600 transition-all duration-200"
         >
           View Details
         </button>
         <button
-          onClick={() => onApply?.(internship.id)}
+          onClick={() => onApply?.(internship.id || '')}
           className="flex-1 bg-orange-600 text-white py-3 px-4 rounded-lg font-semibold hover:bg-orange-700 transition-all duration-200 shadow-lg hover:shadow-xl"
         >
           Apply Now

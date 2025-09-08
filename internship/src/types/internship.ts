@@ -1,5 +1,5 @@
 export interface Internship {
-  id: string;
+  id?: string; // Optional ID for UI purposes
   internship_type: string;
   sector: string;
   'area/field': string;
@@ -12,6 +12,8 @@ export interface Internship {
   specialization: string;
   preferred_skills: string[];
   certification_name: string[];
+  special_requirements: string[];
+  // Optional fields for backwards compatibility
   stipend?: number;
   duration?: string;
   company?: string;

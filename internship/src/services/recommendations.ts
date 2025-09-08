@@ -1,189 +1,16 @@
 import { Internship, InternshipRecommendation, RecommendationRequest } from '../types/internship';
 import { Profile } from '../types/profile';
+import internshipsData from '../data/internships.json';
 
-// Mock internship data - in a real app, this would come from an API
-const mockInternships: Internship[] = [
-  {
-    id: '1',
-    internship_type: 'Corporate (12 months)',
-    sector: 'IT and Software Development',
-    'area/field': 'Web Development',
-    no_of_opportunities: 5,
-    description: 'Join our dynamic web development team to build modern, responsive websites and web applications. You will work with React, Node.js, and modern development tools while learning industry best practices.',
-    'state/ut': 'KARNATAKA',
-    district: 'Bangalore',
-    minimum_qualification: 'Graduation',
-    course: 'B.Tech',
-    specialization: 'Computer Science',
-    preferred_skills: ['React', 'JavaScript', 'HTML/CSS', 'Node.js', 'Git'],
-    certification_name: [],
-    stipend: 15000,
-    duration: '12 months',
-    company: 'TechCorp Solutions'
-  },
-  {
-    id: '2',
-    internship_type: 'Corporate (6 months)',
-    sector: 'Banking and financial Services',
-    'area/field': 'Financial Analysis',
-    no_of_opportunities: 3,
-    description: 'Exciting opportunity to work with our financial analysis team. Learn about market research, financial modeling, and investment strategies while working on real client projects.',
-    'state/ut': 'MAHARASHTRA',
-    district: 'Mumbai',
-    minimum_qualification: 'Graduation',
-    course: 'B.Com',
-    specialization: 'Finance',
-    preferred_skills: ['Excel', 'Financial Modeling', 'Data Analysis', 'Communication'],
-    certification_name: [],
-    stipend: 12000,
-    duration: '6 months',
-    company: 'FinanceFirst Bank'
-  },
-  {
-    id: '3',
-    internship_type: 'Government (6 months)',
-    sector: 'Healthcare',
-    'area/field': 'Public Health',
-    no_of_opportunities: 8,
-    description: 'Work with our public health team to improve healthcare delivery in rural areas. Assist in health camps, data collection, and community outreach programs.',
-    'state/ut': 'UTTAR PRADESH',
-    district: 'Lucknow',
-    minimum_qualification: '12th',
-    course: 'Any',
-    specialization: '',
-    preferred_skills: ['Communication', 'Hindi', 'Basic Computer', 'Teamwork'],
-    certification_name: [],
-    stipend: 8000,
-    duration: '6 months',
-    company: 'Department of Health'
-  },
-  {
-    id: '4',
-    internship_type: 'Corporate (3 months)',
-    sector: 'Manufacturing & Industrial',
-    'area/field': 'Quality Control',
-    no_of_opportunities: 4,
-    description: 'Learn quality control processes in manufacturing. Work with quality assurance teams to ensure products meet industry standards and customer requirements.',
-    'state/ut': 'GUJARAT',
-    district: 'Ahmedabad',
-    minimum_qualification: 'Diploma',
-    course: 'Mechanical Engineering',
-    specialization: 'Manufacturing',
-    preferred_skills: ['Quality Control', 'Manufacturing Processes', 'Documentation', 'Attention to Detail'],
-    certification_name: [],
-    stipend: 10000,
-    duration: '3 months',
-    company: 'Industrial Solutions Ltd'
-  },
-  {
-    id: '5',
-    internship_type: 'NGO (6 months)',
-    sector: 'Education',
-    'area/field': 'Teaching Support',
-    no_of_opportunities: 10,
-    description: 'Support teachers in rural schools by creating educational materials, conducting classes, and helping with digital literacy programs for students.',
-    'state/ut': 'RAJASTHAN',
-    district: 'Jaipur',
-    minimum_qualification: 'Graduation',
-    course: 'B.Ed',
-    specialization: 'Education',
-    preferred_skills: ['Teaching', 'Hindi', 'English', 'Computer Literacy', 'Patience'],
-    certification_name: [],
-    stipend: 6000,
-    duration: '6 months',
-    company: 'Education for All NGO'
-  },
-  {
-    id: '6',
-    internship_type: 'Corporate (9 months)',
-    sector: 'IT and Software Development',
-    'area/field': 'Mobile App Development',
-    no_of_opportunities: 6,
-    description: 'Build innovative mobile applications for Android and iOS platforms. Work with cross-functional teams to deliver user-friendly apps.',
-    'state/ut': 'TELANGANA',
-    district: 'Hyderabad',
-    minimum_qualification: 'Graduation',
-    course: 'B.Tech',
-    specialization: 'Computer Science',
-    preferred_skills: ['React Native', 'Flutter', 'Android', 'iOS', 'API Integration'],
-    certification_name: [],
-    stipend: 18000,
-    duration: '9 months',
-    company: 'MobileFirst Technologies'
-  },
-  {
-    id: '7',
-    internship_type: 'Government (12 months)',
-    sector: 'Education',
-    'area/field': 'Skill Development',
-    no_of_opportunities: 15,
-    description: 'Help implement skill development programs in rural and semi-urban areas. Train youth in various technical and vocational skills.',
-    'state/ut': 'BIHAR',
-    district: 'Patna',
-    minimum_qualification: 'Graduation',
-    course: 'Any',
-    specialization: '',
-    preferred_skills: ['Training', 'Hindi', 'Communication', 'Computer Skills'],
-    certification_name: [],
-    stipend: 9000,
-    duration: '12 months',
-    company: 'Ministry of Skill Development'
-  },
-  {
-    id: '8',
-    internship_type: 'Corporate (6 months)',
-    sector: 'Banking and financial Services',
-    'area/field': 'Digital Banking',
-    no_of_opportunities: 4,
-    description: 'Work on digital transformation initiatives in banking. Assist in developing and testing new digital banking features and services.',
-    'state/ut': 'DELHI',
-    district: 'New Delhi',
-    minimum_qualification: 'Graduation',
-    course: 'BCA',
-    specialization: 'Computer Applications',
-    preferred_skills: ['Digital Marketing', 'App Testing', 'Customer Service', 'Banking Knowledge'],
-    certification_name: [],
-    stipend: 14000,
-    duration: '6 months',
-    company: 'Digital Bank India'
-  },
-  {
-    id: '9',
-    internship_type: 'NGO (4 months)',
-    sector: 'Healthcare',
-    'area/field': 'Community Health',
-    no_of_opportunities: 12,
-    description: 'Support community health workers in providing healthcare services. Assist in health awareness campaigns and vaccination drives.',
-    'state/ut': 'WEST BENGAL',
-    district: 'Kolkata',
-    minimum_qualification: '12th',
-    course: 'Any',
-    specialization: '',
-    preferred_skills: ['Bengali', 'Health Awareness', 'Community Work', 'Basic Medical Knowledge'],
-    certification_name: [],
-    stipend: 7000,
-    duration: '4 months',
-    company: 'Health for All Foundation'
-  },
-  {
-    id: '10',
-    internship_type: 'Corporate (8 months)',
-    sector: 'Manufacturing & Industrial',
-    'area/field': 'Industrial Engineering',
-    no_of_opportunities: 3,
-    description: 'Learn about industrial processes, automation, and efficiency optimization. Work on improving manufacturing workflows and reducing waste.',
-    'state/ut': 'TAMIL NADU',
-    district: 'Chennai',
-    minimum_qualification: 'Graduation',
-    course: 'B.Tech',
-    specialization: 'Industrial Engineering',
-    preferred_skills: ['Process Improvement', 'AutoCAD', 'Lean Manufacturing', 'Data Analysis'],
-    certification_name: [],
-    stipend: 16000,
-    duration: '8 months',
-    company: 'Chennai Manufacturing Co.'
-  }
-];
+// Load internship data from JSON file and add IDs
+const loadInternships = (): Internship[] => {
+  return internshipsData.map((internship, index) => ({
+    ...internship,
+    id: `internship_${index + 1}` // Add unique ID for each internship
+  }));
+};
+
+const internships: Internship[] = loadInternships();
 
 export class RecommendationService {
   private static instance: RecommendationService;
@@ -490,8 +317,8 @@ export class RecommendationService {
     };
 
     // Calculate recommendations
-    const recommendations: InternshipRecommendation[] = mockInternships
-      .map(internship => {
+    const recommendations: InternshipRecommendation[] = internships
+      .map((internship: Internship) => {
         const matchScore = this.calculateMatchScore(mockProfile, internship);
         const matchReasons = this.generateMatchReasons(mockProfile, internship, matchScore);
 
@@ -501,17 +328,17 @@ export class RecommendationService {
           matchReasons
         };
       })
-      .filter(rec => rec.matchScore >= 20) // Lower threshold for more options
-      .sort((a, b) => b.matchScore - a.matchScore); // Sort by match score
+      .filter((rec: InternshipRecommendation) => rec.matchScore >= 20) // Lower threshold for more options
+      .sort((a: InternshipRecommendation, b: InternshipRecommendation) => b.matchScore - a.matchScore); // Sort by match score
 
     // Ensure we return 3-5 recommendations
     const finalRecommendations = recommendations.slice(0, 5);
     
     // If we have less than 3, add some with lower scores
     if (finalRecommendations.length < 3) {
-      const remaining = mockInternships
-        .filter(internship => !finalRecommendations.some(rec => rec.internship.id === internship.id))
-        .map(internship => {
+      const remaining = internships
+        .filter((internship: Internship) => !finalRecommendations.some(rec => rec.internship.id === internship.id))
+        .map((internship: Internship) => {
           const matchScore = Math.max(this.calculateMatchScore(mockProfile, internship), 25);
           const matchReasons = this.generateMatchReasons(mockProfile, internship, matchScore);
           return { internship, matchScore, matchReasons };
@@ -526,12 +353,12 @@ export class RecommendationService {
 
   // Get all available sectors
   public getAvailableSectors(): string[] {
-    return Array.from(new Set(mockInternships.map(internship => internship.sector)));
+    return Array.from(new Set(internships.map((internship: Internship) => internship.sector)));
   }
 
   // Get all available locations
   public getAvailableLocations(): string[] {
-    const locations = mockInternships.map(internship => 
+    const locations = internships.map((internship: Internship) => 
       `${internship.district}, ${internship['state/ut']}`
     );
     return Array.from(new Set(locations));
@@ -548,7 +375,7 @@ export class RecommendationService {
     // Simulate API delay
     await new Promise(resolve => setTimeout(resolve, 500));
 
-    let filteredInternships = [...mockInternships];
+    let filteredInternships = [...internships];
 
     if (filters) {
       if (filters.sector) {

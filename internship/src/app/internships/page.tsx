@@ -319,13 +319,13 @@ export default function AllInternshipsPage() {
                 {/* Actions */}
                 <div className="flex space-x-3">
                   <button
-                    onClick={() => handleApply(internship.id)}
+                    onClick={() => handleApply(internship.id || '')}
                     className="flex-1 bg-blue-600 text-white py-2.5 px-4 rounded-lg hover:bg-blue-700 transition-colors font-medium text-sm"
                   >
                     Apply Now
                   </button>
                   <button
-                    onClick={() => alert(`Viewing details for: ${internship['area/field']} at ${internship.company}`)}
+                    onClick={() => alert(`Viewing details for: ${internship['area/field']}`)}
                     className="flex-1 bg-gray-100 text-gray-700 py-2.5 px-4 rounded-lg hover:bg-gray-200 transition-colors font-medium text-sm"
                   >
                     View Details
