@@ -73,17 +73,25 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const verifyOTP = async (data: OTPVerificationData): Promise<void> => {
     try {
+      console.log('Starting OTP verification with data:', data);
+      
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1500));
       
       // Mock OTP verification (in real app, verify with backend)
+      console.log('Received OTP:', data.otp, 'Length:', data.otp.length);
+      
       if (data.otp === '123456' || data.otp.length === 6) {
+        console.log('OTP validation passed');
+        
         const user: User = {
           id: Date.now().toString(),
           phoneNumber: data.phoneNumber,
           name: undefined,
           isVerified: true
         };
+        
+        console.log('Created user:', user);
         
         // Save to localStorage
         localStorage.setItem('pm_internship_user', JSON.stringify(user));
@@ -95,7 +103,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         });
         
         setPendingPhoneNumber('');
+        console.log('OTP verification completed successfully');
       } else {
+        console.log('OTP validation failed');
         throw new Error('Invalid OTP');
       }
     } catch (error) {

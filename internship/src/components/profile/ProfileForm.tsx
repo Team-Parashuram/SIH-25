@@ -80,39 +80,39 @@ export default function ProfileForm({ onSubmit, initialData, loading = false }: 
 
   const renderStep1 = () => (
     <div className="space-y-6">
-      <h2 className="text-xl font-semibold text-gray-900 mb-4">Personal Information</h2>
+      <h2 className="text-2xl font-bold text-black mb-6">Personal Information</h2>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-semibold text-black mb-3">
             👤 Full Name
           </label>
           <input
             type="text"
             value={formData.name}
             onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full px-4 py-4 border-2 border-gray-300 rounded-lg bg-white text-black font-medium focus:ring-2 focus:ring-orange-500 focus:border-orange-500 hover:border-orange-300 transition-colors"
             placeholder="Enter your full name"
             required
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-semibold text-black mb-3">
             📧 Email Address
           </label>
           <input
             type="email"
             value={formData.email}
             onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full px-4 py-4 border-2 border-gray-300 rounded-lg bg-white text-black font-medium focus:ring-2 focus:ring-orange-500 focus:border-orange-500 hover:border-orange-300 transition-colors"
             placeholder="Enter your email"
             required
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-semibold text-black mb-3">
             📅 Date of Birth
           </label>
           <input
@@ -302,17 +302,17 @@ export default function ProfileForm({ onSubmit, initialData, loading = false }: 
   );
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8 px-4">
+    <div className="min-h-screen bg-white py-8 px-6">
       <div className="max-w-2xl mx-auto">
-        <div className="bg-white rounded-xl shadow-lg p-8">
+        <div className="bg-white rounded-xl shadow-2xl border border-gray-200 p-8">
           <div className="mb-8">
             <div className="flex justify-between items-center mb-4">
-              <h1 className="text-2xl font-bold text-gray-900">Complete Your Profile</h1>
-              <span className="text-sm text-gray-500">Step {currentStep} of 3</span>
+              <h1 className="text-3xl font-bold text-black">Complete Your Profile</h1>
+              <span className="text-sm text-black font-medium">Step {currentStep} of 3</span>
             </div>
-            <div className="w-full bg-gray-200 rounded-full h-2">
+            <div className="w-full bg-gray-200 rounded-full h-3">
               <div 
-                className="bg-blue-600 h-2 rounded-full transition-all duration-300"
+                className="bg-orange-600 h-3 rounded-full transition-all duration-300 shadow-sm"
                 style={{ width: `${(currentStep / 3) * 100}%` }}
               ></div>
             </div>
@@ -328,7 +328,7 @@ export default function ProfileForm({ onSubmit, initialData, loading = false }: 
                 <button
                   type="button"
                   onClick={() => setCurrentStep(currentStep - 1)}
-                  className="px-6 py-3 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200"
+                  className="px-8 py-4 bg-white text-black border-2 border-gray-300 rounded-lg hover:border-orange-500 hover:text-orange-600 font-semibold transition-all duration-200"
                 >
                   ← Previous
                 </button>
@@ -338,7 +338,7 @@ export default function ProfileForm({ onSubmit, initialData, loading = false }: 
                 <button
                   type="button"
                   onClick={() => setCurrentStep(currentStep + 1)}
-                  className="ml-auto px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                  className="ml-auto px-8 py-4 bg-orange-600 text-white rounded-lg hover:bg-orange-700 font-semibold text-lg shadow-lg hover:shadow-xl transition-all duration-200"
                 >
                   Next →
                 </button>
@@ -346,9 +346,16 @@ export default function ProfileForm({ onSubmit, initialData, loading = false }: 
                 <button
                   type="submit"
                   disabled={loading}
-                  className="ml-auto px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50"
+                  className="ml-auto px-8 py-4 bg-orange-600 text-white rounded-lg hover:bg-orange-700 disabled:opacity-50 font-semibold text-lg shadow-lg hover:shadow-xl transition-all duration-200"
                 >
-                  {loading ? 'Saving...' : 'Complete Profile'}
+                  {loading ? (
+                    <div className="flex items-center">
+                      <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                      Saving...
+                    </div>
+                  ) : (
+                    'Complete Profile'
+                  )}
                 </button>
               )}
             </div>

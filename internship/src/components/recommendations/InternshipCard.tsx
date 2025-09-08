@@ -18,9 +18,9 @@ export default function InternshipCard({
   onViewDetails 
 }: InternshipCardProps) {
   const getMatchScoreColor = (score: number) => {
-    if (score >= 80) return 'bg-green-100 text-green-800';
-    if (score >= 60) return 'bg-yellow-100 text-yellow-800';
-    return 'bg-red-100 text-red-800';
+    if (score >= 80) return 'bg-orange-100 text-orange-800';
+    if (score >= 60) return 'bg-orange-50 text-orange-700';
+    return 'bg-gray-100 text-gray-700';
   };
 
   const formatDescription = (description: string) => {
@@ -30,18 +30,18 @@ export default function InternshipCard({
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-md border border-gray-200 p-6 hover:shadow-lg transition-shadow">
+    <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-6 hover:shadow-xl transition-all duration-200 hover:border-orange-200">
       {/* Header */}
       <div className="flex justify-between items-start mb-4">
         <div className="flex-1">
-          <h3 className="text-lg font-semibold text-gray-900 mb-2">
+          <h3 className="text-xl font-bold text-black mb-3">
             {internship['area/field']} - {internship.sector}
           </h3>
-          <div className="flex items-center space-x-4 text-sm text-gray-600">
-            <span className="flex items-center">
+          <div className="flex items-center space-x-4 text-sm text-black">
+            <span className="flex items-center font-medium">
               📍 {internship.district}, {internship['state/ut']}
             </span>
-            <span className="flex items-center">
+            <span className="flex items-center font-medium">
               ⏰ {internship.internship_type}
             </span>
           </div>
@@ -55,20 +55,20 @@ export default function InternshipCard({
       </div>
 
       {/* Description */}
-      <p className="text-gray-700 text-sm mb-4 leading-relaxed">
+      <p className="text-black text-base mb-6 leading-relaxed font-medium">
         {formatDescription(internship.description)}
       </p>
 
       {/* Requirements */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
         <div>
-          <h4 className="text-sm font-medium text-gray-900 mb-2">📚 Requirements</h4>
-          <div className="space-y-1">
-            <span className="inline-block bg-blue-50 text-blue-700 px-2 py-1 rounded text-xs">
+          <h4 className="text-sm font-bold text-black mb-3">📚 Requirements</h4>
+          <div className="space-y-2">
+            <span className="inline-block bg-orange-50 text-orange-700 px-3 py-2 rounded-lg text-sm font-medium">
               {internship.minimum_qualification}
             </span>
             {internship.course && (
-              <span className="inline-block bg-blue-50 text-blue-700 px-2 py-1 rounded text-xs ml-1">
+              <span className="inline-block bg-orange-50 text-orange-700 px-3 py-2 rounded-lg text-sm font-medium ml-2">
                 {internship.course}
               </span>
             )}
@@ -76,8 +76,8 @@ export default function InternshipCard({
         </div>
 
         <div>
-          <h4 className="text-sm font-medium text-gray-900 mb-2">🎯 Skills Needed</h4>
-          <div className="flex flex-wrap gap-1">
+          <h4 className="text-sm font-bold text-black mb-3">🎯 Skills Needed</h4>
+          <div className="flex flex-wrap gap-2">
             {internship.preferred_skills.slice(0, 3).map((skill, index) => (
               <span key={index} className="bg-green-50 text-green-700 px-2 py-1 rounded text-xs">
                 {skill}
@@ -98,8 +98,8 @@ export default function InternshipCard({
           <h4 className="text-sm font-medium text-gray-900 mb-2">✨ Why this matches you</h4>
           <ul className="space-y-1">
             {matchReasons.slice(0, 2).map((reason, index) => (
-              <li key={index} className="text-xs text-gray-600 flex items-center">
-                <span className="w-1 h-1 bg-green-500 rounded-full mr-2"></span>
+              <li key={index} className="text-sm text-black flex items-center font-medium">
+                <span className="w-2 h-2 bg-orange-500 rounded-full mr-3"></span>
                 {reason}
               </li>
             ))}
@@ -108,8 +108,8 @@ export default function InternshipCard({
       )}
 
       {/* Opportunities */}
-      <div className="flex items-center justify-between mb-4">
-        <span className="text-sm text-gray-600">
+      <div className="flex items-center justify-between mb-6">
+        <span className="text-sm text-black font-semibold">
           🎪 {internship.no_of_opportunities} opportunities available
         </span>
       </div>
@@ -118,13 +118,13 @@ export default function InternshipCard({
       <div className="flex space-x-3">
         <button
           onClick={() => onViewDetails?.(internship.id)}
-          className="flex-1 bg-gray-100 text-gray-700 py-2 px-4 rounded-lg text-sm font-medium hover:bg-gray-200 transition-colors"
+          className="flex-1 bg-white text-black border-2 border-gray-300 py-3 px-4 rounded-lg font-semibold hover:border-orange-500 hover:text-orange-600 transition-all duration-200"
         >
           View Details
         </button>
         <button
           onClick={() => onApply?.(internship.id)}
-          className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors"
+          className="flex-1 bg-orange-600 text-white py-3 px-4 rounded-lg font-semibold hover:bg-orange-700 transition-all duration-200 shadow-lg hover:shadow-xl"
         >
           Apply Now
         </button>

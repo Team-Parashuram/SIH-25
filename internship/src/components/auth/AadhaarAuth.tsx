@@ -70,24 +70,24 @@ export default function AadhaarAuth({ onSubmit, onSkip, loading = false }: Aadha
 
   if (step === 'otp') {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100 flex items-center justify-center p-4">
-        <div className="bg-white rounded-xl shadow-lg p-8 w-full max-w-md">
+      <div className="min-h-screen bg-white flex items-center justify-center p-4">
+        <div className="bg-white rounded-xl shadow-2xl border border-gray-200 p-8 w-full max-w-md">
           <div className="text-center mb-8">
-            <div className="mx-auto mb-4 h-16 w-16 bg-green-100 rounded-full flex items-center justify-center">
+            <div className="mx-auto mb-4 h-16 w-16 bg-orange-100 rounded-full flex items-center justify-center">
               <span className="text-2xl">🆔</span>
             </div>
-            <h1 className="text-2xl font-bold text-gray-900 mb-2">Aadhaar OTP</h1>
-            <p className="text-gray-600 text-sm">
+            <h1 className="text-3xl font-bold text-black mb-2">Aadhaar OTP</h1>
+            <p className="text-black text-base">
               Enter OTP sent to your Aadhaar-linked mobile number
             </p>
           </div>
 
           <form onSubmit={handleOtpSubmit} className="space-y-6">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-4 text-center">
+              <label className="block text-sm font-semibold text-black mb-4 text-center">
                 Enter Aadhaar OTP
               </label>
-              <div className="flex justify-center space-x-2">
+              <div className="flex justify-center space-x-3">
                 {otp.map((digit, index) => (
                   <input
                     key={index}
@@ -95,8 +95,8 @@ export default function AadhaarAuth({ onSubmit, onSkip, loading = false }: Aadha
                     type="text"
                     value={digit}
                     onChange={(e) => handleOtpChange(index, e.target.value)}
-                    className={`w-12 h-12 text-center text-xl font-semibold border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${
-                      errors.otp ? 'border-red-500' : 'border-gray-300'
+                    className={`w-14 h-14 text-center text-xl font-bold border-2 rounded-lg bg-white text-black focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors ${
+                      errors.otp ? 'border-red-500' : 'border-gray-300 hover:border-orange-300'
                     }`}
                     maxLength={1}
                     disabled={loading}
@@ -104,7 +104,7 @@ export default function AadhaarAuth({ onSubmit, onSkip, loading = false }: Aadha
                 ))}
               </div>
               {errors.otp && (
-                <p className="mt-2 text-sm text-red-600 text-center">{errors.otp}</p>
+                <p className="mt-3 text-sm text-red-600 text-center font-medium">{errors.otp}</p>
               )}
             </div>
 
@@ -112,11 +112,11 @@ export default function AadhaarAuth({ onSubmit, onSkip, loading = false }: Aadha
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-green-600 text-white py-3 px-4 rounded-lg font-medium hover:bg-green-700 focus:ring-2 focus:ring-green-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="w-full bg-orange-600 text-white py-4 px-6 rounded-lg font-semibold text-lg hover:bg-orange-700 focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-lg hover:shadow-xl"
               >
                 {loading ? (
                   <div className="flex items-center justify-center">
-                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                    <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white mr-3"></div>
                     Verifying...
                   </div>
                 ) : (
@@ -128,7 +128,7 @@ export default function AadhaarAuth({ onSubmit, onSkip, loading = false }: Aadha
                 type="button"
                 onClick={() => setStep('aadhaar')}
                 disabled={loading}
-                className="w-full bg-gray-100 text-gray-700 py-3 px-4 rounded-lg font-medium hover:bg-gray-200 focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="w-full bg-white text-black py-4 px-6 rounded-lg font-semibold border-2 border-gray-300 hover:border-orange-500 hover:text-orange-600 focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
               >
                 ← Back
               </button>
@@ -140,21 +140,21 @@ export default function AadhaarAuth({ onSubmit, onSkip, loading = false }: Aadha
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100 flex items-center justify-center p-4">
-      <div className="bg-white rounded-xl shadow-lg p-8 w-full max-w-md">
+    <div className="min-h-screen bg-white flex items-center justify-center p-4">
+      <div className="bg-white rounded-xl shadow-2xl border border-gray-200 p-8 w-full max-w-md">
         <div className="text-center mb-8">
-          <div className="mx-auto mb-4 h-16 w-16 bg-green-100 rounded-full flex items-center justify-center">
+          <div className="mx-auto mb-4 h-16 w-16 bg-orange-100 rounded-full flex items-center justify-center">
             <span className="text-2xl">🆔</span>
           </div>
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">Aadhaar Verification</h1>
-          <p className="text-gray-600 text-sm">
+          <h1 className="text-3xl font-bold text-black mb-2">Aadhaar Verification</h1>
+          <p className="text-black text-base">
             Link your Aadhaar for secure authentication (Optional)
           </p>
         </div>
 
         <form onSubmit={handleAadhaarSubmit} className="space-y-6">
           <div>
-            <label htmlFor="aadhaarNumber" className="block text-sm font-medium text-gray-700 mb-2">
+            <label htmlFor="aadhaarNumber" className="block text-sm font-semibold text-black mb-3">
               🆔 Aadhaar Number
             </label>
             <input
@@ -162,15 +162,15 @@ export default function AadhaarAuth({ onSubmit, onSkip, loading = false }: Aadha
               id="aadhaarNumber"
               value={aadhaarNumber}
               onChange={(e) => setAadhaarNumber(e.target.value.replace(/\D/g, '').slice(0, 12))}
-              className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${
-                errors.aadhaar ? 'border-red-500' : 'border-gray-300'
+              className={`w-full px-4 py-4 border-2 rounded-lg bg-white text-black font-medium focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors ${
+                errors.aadhaar ? 'border-red-500' : 'border-gray-300 hover:border-orange-300'
               }`}
               placeholder="Enter 12-digit Aadhaar number"
               maxLength={12}
               disabled={loading}
             />
             {errors.aadhaar && (
-              <p className="mt-1 text-sm text-red-600">{errors.aadhaar}</p>
+              <p className="mt-2 text-sm text-red-600 font-medium">{errors.aadhaar}</p>
             )}
           </div>
 
@@ -178,11 +178,11 @@ export default function AadhaarAuth({ onSubmit, onSkip, loading = false }: Aadha
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-green-600 text-white py-3 px-4 rounded-lg font-medium hover:bg-green-700 focus:ring-2 focus:ring-green-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              className="w-full bg-orange-600 text-white py-4 px-6 rounded-lg font-semibold text-lg hover:bg-orange-700 focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-lg hover:shadow-xl"
             >
               {loading ? (
                 <div className="flex items-center justify-center">
-                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                  <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white mr-3"></div>
                   Sending OTP...
                 </div>
               ) : (
@@ -194,16 +194,16 @@ export default function AadhaarAuth({ onSubmit, onSkip, loading = false }: Aadha
               type="button"
               onClick={onSkip}
               disabled={loading}
-              className="w-full bg-gray-100 text-gray-700 py-3 px-4 rounded-lg font-medium hover:bg-gray-200 focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              className="w-full bg-white text-black py-4 px-6 rounded-lg font-semibold border-2 border-gray-300 hover:border-orange-500 hover:text-orange-600 focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
             >
               Skip for Now →
             </button>
           </div>
         </form>
 
-        <div className="mt-6 text-center">
-          <p className="text-xs text-gray-500">
-            Your Aadhaar details are secure and used only for verification
+        <div className="mt-8 text-center">
+          <p className="text-sm text-black">
+            🔒 Your Aadhaar details are secure and used only for verification
           </p>
         </div>
       </div>

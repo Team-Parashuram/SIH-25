@@ -37,9 +37,9 @@ export default function RecommendationList({
     return (
       <div className="space-y-6">
         <div className="text-center py-12">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <h3 className="text-lg font-medium text-gray-900 mb-2">Finding Perfect Internships</h3>
-          <p className="text-gray-600">Analyzing your profile and matching with opportunities...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-600 mx-auto mb-4"></div>
+          <h3 className="text-xl font-bold text-black mb-2">Finding Perfect Internships</h3>
+          <p className="text-black">Analyzing your profile and matching with opportunities...</p>
         </div>
       </div>
     );
@@ -48,16 +48,16 @@ export default function RecommendationList({
   if (recommendations.length === 0) {
     return (
       <div className="text-center py-12">
-        <div className="mx-auto mb-4 h-16 w-16 bg-gray-100 rounded-full flex items-center justify-center">
+        <div className="mx-auto mb-4 h-16 w-16 bg-orange-100 rounded-full flex items-center justify-center">
           <span className="text-2xl">🔍</span>
         </div>
-        <h3 className="text-lg font-medium text-gray-900 mb-2">No Recommendations Found</h3>
-        <p className="text-gray-600 mb-4">
+        <h3 className="text-xl font-bold text-black mb-2">No Recommendations Found</h3>
+        <p className="text-black mb-6">
           We couldn&apos;t find any internships matching your profile. Try updating your skills or preferences.
         </p>
         <button
           onClick={onRefresh}
-          className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+          className="bg-orange-600 text-white px-8 py-3 rounded-lg hover:bg-orange-700 transition-colors font-semibold shadow-lg hover:shadow-xl"
         >
           Refresh Recommendations
         </button>
@@ -70,17 +70,17 @@ export default function RecommendationList({
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
-          <h2 className="text-2xl font-bold text-gray-900">
+          <h2 className="text-3xl font-bold text-black">
             🎯 Top Recommendations for You
           </h2>
-          <p className="text-gray-600 mt-1">
+          <p className="text-black mt-2 text-lg">
             {recommendations.length} carefully selected internship{recommendations.length !== 1 ? 's' : ''} matching your profile
           </p>
         </div>
         
         <button
           onClick={onRefresh}
-          className="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-200 transition-colors text-sm font-medium"
+          className="bg-white text-black border-2 border-gray-300 px-6 py-3 rounded-lg hover:border-orange-500 hover:text-orange-600 transition-colors font-semibold"
         >
           🔄 Refresh
         </button>

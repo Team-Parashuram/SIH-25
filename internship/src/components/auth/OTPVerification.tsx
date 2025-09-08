@@ -35,23 +35,67 @@ export default function OTPVerification({
   }, [timer]);
 
   const handleOtpChange = (index: number, value: string) => {
-    if (value.length > 1) return;
+    // Only allow single digits
+    if (value.length > 1) {
+      // Handle paste operation
+      if (value.length === 6) {
+        const digits = value.split('').slice(0, 6);
+        setOtp(digits);
+        // Focus the last input
+        const lastInput = document.getElementById(`otp-5`);
+        lastInput?.focus();
+        return;
+      }
+      return;
+    }
+    
+    // Only allow numbers
+    if (value !== '' && !/^\d$/.test(value)) {
+      return;
+    }
     
     const newOtp = [...otp];
     newOtp[index] = value;
     setOtp(newOtp);
+    
+    console.log('OTP changed:', newOtp.join(''));
     
     // Auto-focus next input
     if (value && index < 5) {
       const nextInput = document.getElementById(`otp-${index + 1}`);
       nextInput?.focus();
     }
+    
+    // Auto-submit when all 6 digits are filled
+    if (index === 5 && value) {
+      const fullOtp = newOtp.join('');
+      if (fullOtp.length === 6) {
+        setTimeout(() => {
+          console.log('Auto-submitting OTP:', fullOtp);
+          onSubmit({ phoneNumber, otp: fullOtp });
+        }, 300);
+      }
+    }
   };
 
   const handleKeyDown = (index: number, e: React.KeyboardEvent) => {
-    if (e.key === 'Backspace' && !otp[index] && index > 0) {
+    if (e.key === 'Backspace') {
+      if (!otp[index] && index > 0) {
+        // If current field is empty, move to previous field
+        const prevInput = document.getElementById(`otp-${index - 1}`);
+        prevInput?.focus();
+      } else {
+        // Clear current field
+        const newOtp = [...otp];
+        newOtp[index] = '';
+        setOtp(newOtp);
+      }
+    } else if (e.key === 'ArrowLeft' && index > 0) {
       const prevInput = document.getElementById(`otp-${index - 1}`);
       prevInput?.focus();
+    } else if (e.key === 'ArrowRight' && index < 5) {
+      const nextInput = document.getElementById(`otp-${index + 1}`);
+      nextInput?.focus();
     }
   };
 
@@ -59,6 +103,8 @@ export default function OTPVerification({
     e.preventDefault();
     
     const otpString = otp.join('');
+    console.log('Submitting OTP:', otpString, 'Phone:', phoneNumber);
+    
     const newErrors: { otp?: string } = {};
     
     if (otpString.length !== 6) {
@@ -68,7 +114,10 @@ export default function OTPVerification({
     setErrors(newErrors);
     
     if (Object.keys(newErrors).length === 0) {
+      console.log('OTP validation passed, calling onSubmit');
       onSubmit({ phoneNumber, otp: otpString });
+    } else {
+      console.log('OTP validation failed:', newErrors);
     }
   };
 
@@ -76,29 +125,35 @@ export default function OTPVerification({
     setTimer(30);
     setCanResend(false);
     setOtp(['', '', '', '', '', '']);
+    setErrors({});
     onResend();
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
-      <div className="bg-white rounded-xl shadow-lg p-8 w-full max-w-md">
+    <div className="min-h-screen bg-white flex items-center justify-center p-4">
+      <div className="bg-white rounded-xl shadow-2xl border border-gray-200 p-8 w-full max-w-md">
         <div className="text-center mb-8">
-          <div className="mx-auto mb-4 h-16 w-16 bg-blue-100 rounded-full flex items-center justify-center">
+          <div className="mx-auto mb-4 h-16 w-16 bg-orange-100 rounded-full flex items-center justify-center">
             <span className="text-2xl">📱</span>
           </div>
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">Verify OTP</h1>
-          <p className="text-gray-600 text-sm">
+          <h1 className="text-3xl font-bold text-black mb-2">Verify OTP</h1>
+          <p className="text-black text-base">
             Enter the 6-digit OTP sent to<br />
-            <span className="font-medium">+91 {phoneNumber}</span>
+            <span className="font-semibold text-orange-600">+91 {phoneNumber}</span>
           </p>
+          <div className="mt-3 p-3 bg-orange-50 rounded-lg border border-orange-200">
+            <p className="text-sm text-orange-800 font-medium">
+              💡 For demo: Use <span className="font-bold">123456</span> or any 6-digit number
+            </p>
+          </div>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-4 text-center">
+            <label className="block text-sm font-semibold text-black mb-4 text-center">
               Enter OTP
             </label>
-            <div className="flex justify-center space-x-2">
+            <div className="flex justify-center space-x-3">
               {otp.map((digit, index) => (
                 <input
                   key={index}
@@ -107,8 +162,8 @@ export default function OTPVerification({
                   value={digit}
                   onChange={(e) => handleOtpChange(index, e.target.value)}
                   onKeyDown={(e) => handleKeyDown(index, e)}
-                  className={`w-12 h-12 text-center text-xl font-semibold border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-                    errors.otp ? 'border-red-500' : 'border-gray-300'
+                  className={`w-14 h-14 text-center text-xl font-bold border-2 rounded-lg bg-white text-black focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors ${
+                    errors.otp ? 'border-red-500' : 'border-gray-300 hover:border-orange-300'
                   }`}
                   maxLength={1}
                   disabled={loading}
@@ -116,7 +171,7 @@ export default function OTPVerification({
               ))}
             </div>
             {errors.otp && (
-              <p className="mt-2 text-sm text-red-600 text-center">{errors.otp}</p>
+              <p className="mt-3 text-sm text-red-600 text-center font-medium">{errors.otp}</p>
             )}
           </div>
 
@@ -125,13 +180,13 @@ export default function OTPVerification({
               <button
                 type="button"
                 onClick={handleResend}
-                className="text-blue-600 hover:text-blue-700 font-medium text-sm"
+                className="text-orange-600 hover:text-orange-700 font-semibold text-sm border border-orange-200 px-4 py-2 rounded-lg hover:border-orange-500 transition-colors"
               >
                 Resend OTP
               </button>
             ) : (
-              <p className="text-gray-500 text-sm">
-                Resend OTP in {timer}s
+              <p className="text-black text-sm">
+                Resend OTP in <span className="font-semibold text-orange-600">{timer}s</span>
               </p>
             )}
           </div>
@@ -140,11 +195,11 @@ export default function OTPVerification({
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg font-medium hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              className="w-full bg-orange-600 text-white py-4 px-6 rounded-lg font-semibold text-lg hover:bg-orange-700 focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-lg hover:shadow-xl"
             >
               {loading ? (
                 <div className="flex items-center justify-center">
-                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                  <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white mr-3"></div>
                   Verifying...
                 </div>
               ) : (
@@ -156,7 +211,7 @@ export default function OTPVerification({
               type="button"
               onClick={onBack}
               disabled={loading}
-              className="w-full bg-gray-100 text-gray-700 py-3 px-4 rounded-lg font-medium hover:bg-gray-200 focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              className="w-full bg-white text-black py-4 px-6 rounded-lg font-semibold border-2 border-gray-300 hover:border-orange-500 hover:text-orange-600 focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
             >
               ← Change Phone Number
             </button>
