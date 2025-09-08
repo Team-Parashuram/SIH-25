@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils';
 import { Check } from 'lucide-react';
 
 interface MultiSelectProps {
-  options: { value: string; label: string; emoji?: string }[];
+  options: { value: string; label: string }[];
   selected: string[];
   onSelectionChange: (selected: string[]) => void;
   placeholder: string;
@@ -47,7 +47,7 @@ export function MultiSelect({
               className={cn(
                 'flex items-center justify-between p-3 text-left border rounded-lg transition-all duration-200',
                 isSelected
-                  ? 'border-blue-500 bg-blue-50 text-blue-900'
+                  ? 'border-orange-500 bg-orange-50 text-black'
                   : isDisabled
                   ? 'border-gray-200 bg-gray-50 text-gray-400 cursor-not-allowed'
                   : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50',
@@ -55,11 +55,10 @@ export function MultiSelect({
               )}
             >
               <div className="flex items-center gap-2">
-                {option.emoji && <span className="text-lg">{option.emoji}</span>}
                 <span className="truncate">{option.label}</span>
               </div>
               {isSelected && (
-                <Check className="h-4 w-4 text-blue-600 flex-shrink-0" />
+                <Check className="h-4 w-4 text-orange-600 flex-shrink-0" />
               )}
             </button>
           );

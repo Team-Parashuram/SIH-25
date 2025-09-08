@@ -32,7 +32,7 @@ const skillCategories = {
   },
   'Soft Skills': {
     icon: Users,
-    color: 'purple',
+    color: 'orange',
     skills: [
       'Communication Skills', 'Leadership', 'Teamwork', 'Problem Solving',
       'Critical Thinking', 'Adaptability', 'Time Management', 'Negotiation',
@@ -114,7 +114,7 @@ export function AdvancedSkillsSelector({
           className={cn(
             'w-full p-3 text-left border rounded-lg transition-all duration-200 relative',
             isSelected
-              ? 'border-blue-500 bg-blue-50 text-blue-900'
+              ? 'border-orange-500 bg-orange-50 text-black'
               : isDisabled
               ? 'border-gray-200 bg-gray-50 text-gray-400 cursor-not-allowed'
               : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50',
@@ -126,7 +126,7 @@ export function AdvancedSkillsSelector({
               {isTrending && <TrendingUp className="h-4 w-4 text-orange-500" />}
               <span className="truncate">{skillName}</span>
             </div>
-            {isSelected && <Check className="h-4 w-4 text-blue-600 flex-shrink-0" />}
+            {isSelected && <Check className="h-4 w-4 text-orange-600 flex-shrink-0" />}
           </div>
           {isTrending && (
             <div className="absolute -top-1 -right-1">
@@ -147,7 +147,7 @@ export function AdvancedSkillsSelector({
                   className={cn(
                     'px-2 py-1 text-xs rounded-md transition-colors',
                     skillLevel === level
-                      ? 'bg-blue-500 text-white'
+                      ? 'bg-orange-500 text-white'
                       : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                   )}
                 >
@@ -223,7 +223,7 @@ export function AdvancedSkillsSelector({
             className={cn(
               'px-3 py-2 rounded-lg text-sm font-medium transition-colors',
               activeCategory === category
-                ? 'bg-blue-500 text-white'
+                ? 'bg-orange-500 text-white'
                 : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
             )}
           >
@@ -242,8 +242,8 @@ export function AdvancedSkillsSelector({
 
       {/* Selected Skills Summary */}
       {selectedSkills.length > 0 && (
-        <div className="bg-blue-50 rounded-lg p-4">
-          <h4 className="font-medium text-blue-900 mb-2">Your Selected Skills:</h4>
+        <div className="bg-orange-50 rounded-lg p-4">
+          <h4 className="font-medium text-black mb-2">Your Selected Skills:</h4>
           <div className="flex flex-wrap gap-2">
             {selectedSkills.map((skill) => (
               <span
@@ -252,11 +252,11 @@ export function AdvancedSkillsSelector({
               >
                 {skill}
                 {skillLevels[skill] && (
-                  <span className="text-blue-600">({skillLevels[skill].slice(0, 3)})</span>
+                  <span className="text-orange-600">({skillLevels[skill].slice(0, 3)})</span>
                 )}
                 <button
                   onClick={() => toggleSkill(skill)}
-                  className="text-blue-600 hover:text-blue-800"
+                  className="text-orange-600 hover:text-blue-800"
                 >
                   ×
                 </button>
@@ -267,12 +267,12 @@ export function AdvancedSkillsSelector({
       )}
 
       {/* ML Insight */}
-      <div className="bg-gradient-to-r from-purple-50 to-blue-50 rounded-lg p-3 border border-purple-200">
+      <div className="bg-gradient-to-r from-orange-50 to-blue-50 rounded-lg p-3 border border-orange-200">
         <div className="flex items-center gap-2 mb-1">
-          <Lightbulb className="h-4 w-4 text-purple-600" />
-          <span className="text-sm font-medium text-purple-900">AI Recommendation</span>
+          <Lightbulb className="h-4 w-4 text-orange-600" />
+          <span className="text-sm font-medium text-orange-900">AI Recommendation</span>
         </div>
-        <p className="text-xs text-purple-800">
+        <p className="text-xs text-orange-800">
           Based on current job market trends, we recommend selecting a mix of technical and soft skills 
           for better matching accuracy.
         </p>

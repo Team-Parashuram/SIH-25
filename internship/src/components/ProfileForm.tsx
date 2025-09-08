@@ -9,7 +9,7 @@ import { candidateProfileSchema, type CandidateProfileForm } from '@/schemas/can
 import { Input, Select, RadioGroup } from './ui/FormElements';
 import { MultiSelect } from './ui/MultiSelect';
 import { AdvancedSkillsSelector } from './ui/AdvancedSkillsSelector';
-import { getSectorEmoji } from '@/lib/utils';
+import { getSectorLabel } from '@/lib/utils';
 import { CandidateProfile } from '@/types/internship';
 
 interface ProfileFormProps {
@@ -45,7 +45,7 @@ const sectors = [
   'Aviation & Defence', 'Pharmaceutical', 'Education', 'Telecom',
   'Infrastructure & Construction', 'FMCG (Fast-Moving Consumer Goods)',
   'Media, Entertainment & Education', 'Oil, Gas & Energy', 'Textile'
-].map(sector => ({ value: sector, label: sector, emoji: getSectorEmoji(sector) }));
+].map(sector => ({ value: sector, label: sector }));
 
 const states = [
   'ANDHRA PRADESH', 'ASSAM', 'BIHAR', 'GUJARAT', 'HARYANA', 'HIMACHAL PRADESH',
@@ -289,14 +289,14 @@ export function ProfileForm({ onSubmit }: ProfileFormProps) {
               render={({ field }) => (
                 <MultiSelect
                   options={[
-                    { value: 'Technical Work', label: 'Technical Work', emoji: '⚙️' },
-                    { value: 'Creative Work', label: 'Creative Work', emoji: '🎨' },
-                    { value: 'People Interaction', label: 'People Interaction', emoji: '👥' },
-                    { value: 'Research & Analysis', label: 'Research & Analysis', emoji: '🔍' },
-                    { value: 'Sales & Marketing', label: 'Sales & Marketing', emoji: '📈' },
-                    { value: 'Teaching & Training', label: 'Teaching & Training', emoji: '👨‍🏫' },
-                    { value: 'Problem Solving', label: 'Problem Solving', emoji: '🧩' },
-                    { value: 'Leadership', label: 'Leadership', emoji: '👑' },
+                    { value: 'Technical Work', label: 'Technical Work' },
+                    { value: 'Creative Work', label: 'Creative Work' },
+                    { value: 'People Interaction', label: 'People Interaction' },
+                    { value: 'Research & Analysis', label: 'Research & Analysis' },
+                    { value: 'Sales & Marketing', label: 'Sales & Marketing' },
+                    { value: 'Teaching & Training', label: 'Teaching & Training' },
+                    { value: 'Problem Solving', label: 'Problem Solving' },
+                    { value: 'Leadership', label: 'Leadership' },
                   ]}
                   selected={field.value}
                   onSelectionChange={field.onChange}

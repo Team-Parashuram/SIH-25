@@ -25,7 +25,7 @@ export function Select({ options, value, onChange, placeholder, className, error
         value={value}
         onChange={(e) => onChange(e.target.value)}
         className={cn(
-          'w-full p-3 border rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors',
+          'w-full p-3 border rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors',
           error ? 'border-red-300' : 'border-gray-300',
           'text-base' // Better for mobile
         )}
@@ -55,7 +55,7 @@ export function Input({ className, error, ...props }: InputProps) {
     <div className="w-full">
       <input
         className={cn(
-          'w-full p-3 border rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors',
+          'w-full p-3 border rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors',
           error ? 'border-red-300' : 'border-gray-300',
           'text-base', // Better for mobile
           className
@@ -86,7 +86,7 @@ export function RadioGroup({ options, value, onChange, name, className }: RadioG
           className={cn(
             'flex items-center gap-3 p-3 border rounded-lg cursor-pointer transition-all duration-200',
             value === option.value
-              ? 'border-blue-500 bg-blue-50'
+              ? 'border-orange-500 bg-orange-50'
               : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
           )}
         >
@@ -96,7 +96,7 @@ export function RadioGroup({ options, value, onChange, name, className }: RadioG
             value={option.value}
             checked={value === option.value}
             onChange={(e) => onChange(e.target.value)}
-            className="w-4 h-4 text-blue-600 focus:ring-blue-500"
+            className="w-4 h-4 text-orange-600 focus:ring-orange-500"
           />
           <div className="flex items-center gap-2">
             {option.emoji && <span className="text-lg">{option.emoji}</span>}

@@ -71,7 +71,7 @@ export function MLProcessingScreen({ onComplete, candidateName }: MLProcessingSc
           }}
           className="mb-6"
         >
-          <div className="w-20 h-20 mx-auto bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+          <div className="w-20 h-20 mx-auto bg-gradient-to-br from-orange-500 to-black rounded-full flex items-center justify-center">
             <svg
               className="w-10 h-10 text-white"
               fill="none"
@@ -100,7 +100,7 @@ export function MLProcessingScreen({ onComplete, candidateName }: MLProcessingSc
         <div className="relative mb-6">
           <div className="w-full bg-gray-200 rounded-full h-3">
             <motion.div
-              className="bg-gradient-to-r from-blue-500 to-purple-600 h-3 rounded-full"
+              className="bg-gradient-to-r from-orange-500 to-black h-3 rounded-full"
               style={{ width: `${progress}%` }}
               transition={{ duration: 0.1 }}
             />
@@ -126,7 +126,7 @@ export function MLProcessingScreen({ onComplete, candidateName }: MLProcessingSc
           {[0, 1, 2].map((i) => (
             <motion.div
               key={i}
-              className="w-2 h-2 bg-blue-500 rounded-full"
+              className="w-2 h-2 bg-orange-500 rounded-full"
               animate={{
                 scale: [1, 1.2, 1],
                 opacity: [0.7, 1, 0.7]

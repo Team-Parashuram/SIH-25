@@ -130,41 +130,35 @@ export default function SignInPage() {
   }, [state.step]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-600 via-purple-700 to-orange-500 relative overflow-hidden">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-15">
-        <div className="absolute top-20 left-20 w-64 h-64 bg-white rounded-full blur-3xl"></div>
-        <div className="absolute bottom-20 right-20 w-96 h-96 bg-orange-300 rounded-full blur-3xl"></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-white rounded-full blur-3xl"></div>
-      </div>
-
+    <div className="min-h-screen bg-white">
       {/* Header Navigation */}
-      <div className="relative z-10 bg-white/10 backdrop-blur-sm border-b border-white/20">
+      <div className="bg-orange-500 border-b-2 border-black">
         <div className="container mx-auto px-4 py-3 flex justify-between items-center">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center">
-              <Shield className="h-5 w-5 text-purple-600" />
+              <Shield className="h-5 w-5 text-orange-600" />
             </div>
             <span className="text-white font-bold">PM Internship Portal</span>
           </div>
           <div className="flex items-center gap-4">
-            <button className="text-white/80 hover:text-white text-sm">हिंदी</button>
-            <button className="text-white/80 hover:text-white text-sm">A+</button>
-            <button className="text-white/80 hover:text-white text-sm">Skip to main content</button>
+            <button className="text-white hover:text-gray-200 text-sm font-medium">हिंदी</button>
+            <button className="text-white hover:text-gray-200 text-sm font-medium">A+</button>
+            <button className="text-white hover:text-gray-200 text-sm font-medium">Skip to main content</button>
           </div>
         </div>
       </div>
 
-      <div className="relative z-10 container mx-auto px-4 py-8 max-w-lg">
+
+      <div className="container mx-auto px-4 py-8 max-w-lg">
         {/* Mobile OTP Step */}
         {state.step === 'mobile_input' && (
-          <Card className="shadow-2xl bg-white/95 backdrop-blur-sm border border-white/20">
+          <Card className="shadow-2xl bg-white border-2 border-black">
             <CardHeader className="text-center">
               <div className="mx-auto mb-4 w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center">
                 <Smartphone className="w-6 h-6 text-orange-600" />
               </div>
-              <CardTitle>Mobile Verification</CardTitle>
-              <CardDescription>
+              <CardTitle className="text-black">Mobile Verification</CardTitle>
+              <CardDescription className="text-black">
                 Enter your mobile number to receive OTP as per PMIS guidelines
               </CardDescription>
             </CardHeader>
@@ -219,7 +213,7 @@ export default function SignInPage() {
                     maxLength={6}
                   />
                   <p className="text-xs text-gray-600">
-                    💡 Demo: Use any 6 digits to proceed
+                    Demo: Use any 6 digits to proceed
                   </p>
                 </div>
                 <div className="flex gap-2">
@@ -259,9 +253,9 @@ export default function SignInPage() {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="bg-blue-50 p-4 rounded-lg">
-                <h4 className="font-medium text-blue-900 mb-2">Required for PM Internship Scheme:</h4>
-                <ul className="text-sm text-blue-800 space-y-1">
+              <div className="bg-white p-4 rounded-lg">
+                <h4 className="font-medium text-black mb-2">Required for PM Internship Scheme:</h4>
+                <ul className="text-sm text-black space-y-1">
                   <li>• Age verification (18-29 years)</li>
                   <li>• Identity confirmation</li>
                   <li>• Educational eligibility check</li>
@@ -292,7 +286,7 @@ export default function SignInPage() {
                 </Button>
                 
                 <p className="text-xs text-gray-600 text-center">
-                  💡 Demo: Simulated eKYC process for presentation
+                  Demo: Simulated eKYC process for presentation
                 </p>
               </div>
             </CardContent>
@@ -374,7 +368,7 @@ export default function SignInPage() {
                     maxLength={6}
                   />
                   <p className="text-xs text-gray-600">
-                    💡 Demo: Use any 6 digits to proceed
+                    Demo: Use any 6 digits to proceed
                   </p>
                 </div>
                 <Button 
@@ -394,8 +388,8 @@ export default function SignInPage() {
         {state.step === 'profile_creation' && (
           <Card className="shadow-2xl bg-white/95 backdrop-blur-sm border border-white/20">
             <CardHeader className="text-center">
-              <div className="mx-auto mb-4 w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
-                <CheckCircle className="w-6 h-6 text-green-600" />
+              <div className="mx-auto mb-4 w-12 h-12 bg-white rounded-full flex items-center justify-center">
+                <CheckCircle className="w-6 h-6 text-orange-600" />
               </div>
               <CardTitle>Verification Complete!</CardTitle>
               <CardDescription>
@@ -403,11 +397,11 @@ export default function SignInPage() {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4 text-center">
-              <div className="bg-green-50 p-4 rounded-lg">
-                <p className="text-green-800 font-medium">
-                  ✅ All verifications completed successfully!
+              <div className="bg-white p-4 rounded-lg">
+                <p className="text-black font-medium">
+                  All verifications completed successfully!
                 </p>
-                <p className="text-green-700 text-sm mt-1">
+                <p className="text-black text-sm mt-1">
                   Ready to find your perfect internship matches
                 </p>
               </div>
@@ -447,7 +441,7 @@ export default function SignInPage() {
               exit={{ opacity: 0, y: -10 }}
               className="mt-4"
             >
-              <Alert className="border-green-200 bg-green-50 text-green-800">
+              <Alert className="border-orange-200 bg-white text-black">
                 <CheckCircle className="w-4 h-4" />
                 <AlertDescription>{success}</AlertDescription>
               </Alert>
@@ -458,7 +452,7 @@ export default function SignInPage() {
         {/* Demo footer */}
         <div className="text-center mt-6 text-sm text-white/80 bg-white/10 backdrop-blur-sm rounded-2xl py-3 px-6 border border-white/20">
           <p>
-            🎯 <strong>UI DEMONSTRATION</strong> • Hardcoded flows for presentation • Modern Government Portal Design
+            <strong>UI DEMONSTRATION</strong> • Hardcoded flows for presentation • Modern Government Portal Design
           </p>
         </div>
       </div>

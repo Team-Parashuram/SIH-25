@@ -89,7 +89,7 @@ export function calculateMLScore(
   const skillScore = Math.min(25, skillMatches.length * 8);
   score += skillScore;
   if (skillMatches.length > 0) {
-    reasons.push(`💡 Deep learning identified ${skillMatches.length} skill vector(s) match`);
+    reasons.push(`Deep learning identified ${skillMatches.length} skill vector(s) match`);
   }
 
   // 4. Interest-Sector Embedding (15% weight)
@@ -99,18 +99,18 @@ export function calculateMLScore(
   
   if (sectorMatch) {
     score += 15;
-    reasons.push(`🎯 High semantic similarity with preferred sectors`);
+    reasons.push(`High semantic similarity with preferred sectors`);
   }
 
   // 5. Geospatial Proximity Analysis (10% weight)
   let locationScore = 0;
   if (internship["state/ut"].toLowerCase() === profile.location.state.toLowerCase()) {
     locationScore += 10;
-    reasons.push(`📍 Location vector optimization: same state`);
+    reasons.push(`Location vector optimization: same state`);
     
     if (internship.district.toLowerCase() === profile.location.district.toLowerCase()) {
       locationScore += 5;
-      reasons.push(`📍 Geospatial clustering: same district (+5% boost)`);
+      reasons.push(`Geospatial clustering: same district (+5% boost)`);
     }
   }
   score += locationScore;
@@ -118,12 +118,12 @@ export function calculateMLScore(
   // ML Ensemble Boosting
   if (profile.isRural && internship.internship_type.includes('Public Sector')) {
     score += 12;
-    reasons.push(`🌾 Rural candidate ensemble boosting activated`);
+    reasons.push(`Rural candidate ensemble boosting activated`);
   }
 
   if (internship.no_of_opportunities > 10) {
     score += 8;
-    reasons.push(`📈 High opportunity volume detected (${internship.no_of_opportunities} positions)`);
+    reasons.push(`High opportunity volume detected (${internship.no_of_opportunities} positions)`);
   }
 
   // Add some ML-style variance for realism

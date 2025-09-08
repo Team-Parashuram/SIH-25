@@ -4,7 +4,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { MapPin, Users, Award, ArrowRight, Sparkles, Brain, Target, Zap } from 'lucide-react';
 import { RecommendationResult } from '@/types/internship';
-import { formatLocation, getInternshipTypeEmoji, getSectorEmoji } from '@/lib/utils';
+import { formatLocation, getInternshipTypeLabel, getSectorLabel } from '@/lib/utils';
 
 interface RecommendationResultsProps {
   recommendations: RecommendationResult[];
@@ -39,8 +39,8 @@ export function RecommendationResults({
   };
 
   const getScoreColor = (score: number) => {
-    if (score >= 80) return 'text-green-600 bg-green-100';
-    if (score >= 60) return 'text-blue-600 bg-blue-100';
+    if (score >= 80) return 'text-orange-600 bg-orange-100';
+    if (score >= 60) return 'text-orange-600 bg-orange-100';
     if (score >= 40) return 'text-yellow-600 bg-yellow-100';
     return 'text-orange-600 bg-orange-100';
   };
@@ -121,14 +121,8 @@ export function RecommendationResults({
               <div className="p-6 border-b border-gray-100">
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex items-center gap-3">
-                    <div className="text-3xl">
-                      {getSectorEmoji(internship.sector)}
-                    </div>
                     <div>
                       <div className="flex items-center gap-2 mb-1">
-                        <span className="text-2xl">
-                          {getInternshipTypeEmoji(internship.internship_type)}
-                        </span>
                         <h3 className="text-lg font-semibold text-gray-900">
                           {internship.sector}
                         </h3>
@@ -240,16 +234,16 @@ export function RecommendationResults({
               )}
 
               {/* AI Match Reasons */}
-              <div className="px-6 py-4 bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200">
-                <h4 className="font-medium text-green-900 mb-2 flex items-center gap-2">
+              <div className="px-6 py-4 bg-gradient-to-r from-orange-50 to-white border border-orange-200">
+                <h4 className="font-medium text-black mb-2 flex items-center gap-2">
                   <Brain className="h-4 w-4" />
                   🤖 Why our AI selected this for you:
                 </h4>
                 <div className="space-y-1">
                   {matchReasons.slice(0, 4).map((reason, reasonIndex) => (
                     <div key={reasonIndex} className="flex items-start gap-2">
-                      <div className="text-green-600 text-sm mt-0.5">•</div>
-                      <span className="text-green-800 text-sm">{reason}</span>
+                      <div className="text-orange-600 text-sm mt-0.5">•</div>
+                      <span className="text-black text-sm">{reason}</span>
                     </div>
                   ))}
                 </div>

@@ -9,45 +9,21 @@ export function formatLocation(state: string, district: string): string {
   return `${district}, ${state}`;
 }
 
-export function getQualificationEmoji(qualification: string): string {
+export function getQualificationLabel(qualification: string): string {
   switch (qualification) {
-    case '10th': return '📚';
-    case '12th': return '🎓';
-    case 'ITI': return '⚙️';
-    case 'Diploma': return '📋';
-    case 'Graduation': return '🎓';
-    default: return '📖';
+    case '10th': return '10th Grade';
+    case '12th': return '12th Grade';
+    case 'ITI': return 'ITI';
+    case 'Diploma': return 'Diploma';
+    case 'Graduation': return 'Graduation';
+    default: return 'Education';
   }
 }
 
-export function getSectorEmoji(sector: string): string {
-  const sectorMap: Record<string, string> = {
-    'IT and Software Development': '💻',
-    'Banking and financial Services': '🏦',
-    'Healthcare': '🏥',
-    'Manufacturing & Industrial': '🏭',
-    'Agriculture and allied': '🌾',
-    'Automotive': '🚗',
-    'Aviation & Defence': '✈️',
-    'Pharmaceutical': '💊',
-    'Education': '🎓',
-    'Telecom': '📱',
-    'Infrastructure & Construction': '🏗️',
-    'FMCG (Fast-Moving Consumer Goods)': '🛒',
-    'Media, Entertainment & Education': '🎬',
-    'Oil, Gas & Energy': '⚡',
-    'Textile': '🧵',
-    'Tourism': '🌍',
-    'Transportation': '🚛',
-    'Retail': '🏪'
-  };
-  
-  return sectorMap[sector] || '💼';
+export function getSectorLabel(sector: string): string {
+  return sector; // Return as is, no emojis
 }
 
-export function getInternshipTypeEmoji(type: string): string {
-  if (type.includes('Corporate')) return '🏢';
-  if (type.includes('Public Sector')) return '🏛️';
-  if (type.includes('Short Term')) return '⏱️';
-  return '💼';
+export function getInternshipTypeLabel(type: string): string {
+  return type; // Return as is, no emojis
 }
