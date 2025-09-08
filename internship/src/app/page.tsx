@@ -10,11 +10,13 @@ import RecommendationList from '../components/recommendations/RecommendationList
 import { ProfileFormData } from '../types/profile';
 import { InternshipRecommendation } from '../types/internship';
 import { RecommendationService } from '../services/recommendations';
+import { useRouter } from 'next/navigation';
 
 type AppStep = 'login' | 'otp' | 'aadhaar' | 'profile' | 'recommendations';
 
 export default function Home() {
   const { isAuthenticated, user, loading, login, verifyOTP, verifyAadhaar, skipAadhaar, logout } = useAuth();
+  const router = useRouter();
   const [currentStep, setCurrentStep] = useState<AppStep>('login');
   const [authLoading, setAuthLoading] = useState(false);
   const [profileLoading, setProfileLoading] = useState(false);
@@ -22,6 +24,7 @@ export default function Home() {
   const [recLoading, setRecLoading] = useState(false);
   const [profile, setProfile] = useState<ProfileFormData | null>(null);
   const [pendingPhoneNumber, setPendingPhoneNumber] = useState<string>('');
+  const [userName, setUserName] = useState('User');
 
   const recommendationService = RecommendationService.getInstance();
 
@@ -29,11 +32,25 @@ export default function Home() {
     console.log('Auth state changed:', { isAuthenticated, user, loading, currentStep });
     if (loading) return;
 
+    // Get user name from profile or auth
+    const savedProfile = localStorage.getItem('pm_internship_profile');
+    if (savedProfile) {
+      try {
+        const parsedProfile = JSON.parse(savedProfile);
+        if (parsedProfile.name) {
+          setUserName(parsedProfile.name);
+        }
+      } catch (error) {
+        console.error('Error parsing profile:', error);
+      }
+    } else if (user?.name) {
+      setUserName(user.name);
+    }
+
     if (!isAuthenticated) {
       setCurrentStep('login');
     } else if (user && !user.aadhaarNumber) {
       // Check if we have a saved profile
-      const savedProfile = localStorage.getItem('pm_internship_profile');
       if (savedProfile) {
         try {
           const parsedProfile = JSON.parse(savedProfile);
@@ -48,7 +65,6 @@ export default function Home() {
       }
     } else {
       // User is authenticated with Aadhaar
-      const savedProfile = localStorage.getItem('pm_internship_profile');
       if (savedProfile) {
         try {
           const parsedProfile = JSON.parse(savedProfile);
@@ -122,6 +138,11 @@ export default function Home() {
       // Save profile to localStorage (in a real app, this would be sent to backend)
       localStorage.setItem('pm_internship_profile', JSON.stringify(data));
       setProfile(data);
+      
+      // Update user name
+      if (data.name) {
+        setUserName(data.name);
+      }
       
       setCurrentStep('recommendations');
       await loadRecommendations(data);
@@ -219,7 +240,10 @@ export default function Home() {
       return (
         <div className="min-h-screen bg-gray-50">
           <div className="bg-white shadow-sm px-4 py-3 flex justify-between items-center">
-            <h1 className="text-lg font-semibold text-gray-900">PM Internship Portal</h1>
+            <div>
+              <h1 className="text-lg font-semibold text-gray-900">PM Internship Portal</h1>
+              <p className="text-sm text-gray-600">Welcome, {userName}</p>
+            </div>
             <button
               onClick={logout}
               className="text-sm text-red-600 hover:text-red-700"
@@ -234,17 +258,27 @@ export default function Home() {
     case 'recommendations':
       return (
         <div className="min-h-screen bg-gray-50">
-          <div className="bg-white shadow-sm px-4 py-3 flex justify-between items-center">
-            <div>
-              <h1 className="text-lg font-semibold text-gray-900">PM Internship Portal</h1>
-              <p className="text-sm text-gray-600">Welcome back, {user?.name || 'User'}</p>
+          <div className="bg-white shadow-sm px-4 py-3">
+            <div className="max-w-6xl mx-auto flex justify-between items-center">
+              <div>
+                <h1 className="text-lg font-semibold text-gray-900">PM Internship Portal</h1>
+                <p className="text-sm text-gray-600">Welcome, {userName}</p>
+              </div>
+              <div className="flex items-center space-x-4">
+                <button
+                  onClick={() => router.push('/internships')}
+                  className="text-sm text-blue-600 hover:text-blue-700 font-medium"
+                >
+                  View All Internships →
+                </button>
+                <button
+                  onClick={logout}
+                  className="text-sm text-red-600 hover:text-red-700"
+                >
+                  Logout
+                </button>
+              </div>
             </div>
-            <button
-              onClick={logout}
-              className="text-sm text-red-600 hover:text-red-700"
-            >
-              Logout
-            </button>
           </div>
           
           <div className="max-w-6xl mx-auto px-4 py-8">

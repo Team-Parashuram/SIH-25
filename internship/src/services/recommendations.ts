@@ -92,6 +92,96 @@ const mockInternships: Internship[] = [
     stipend: 6000,
     duration: '6 months',
     company: 'Education for All NGO'
+  },
+  {
+    id: '6',
+    internship_type: 'Corporate (9 months)',
+    sector: 'IT and Software Development',
+    'area/field': 'Mobile App Development',
+    no_of_opportunities: 6,
+    description: 'Build innovative mobile applications for Android and iOS platforms. Work with cross-functional teams to deliver user-friendly apps.',
+    'state/ut': 'TELANGANA',
+    district: 'Hyderabad',
+    minimum_qualification: 'Graduation',
+    course: 'B.Tech',
+    specialization: 'Computer Science',
+    preferred_skills: ['React Native', 'Flutter', 'Android', 'iOS', 'API Integration'],
+    certification_name: [],
+    stipend: 18000,
+    duration: '9 months',
+    company: 'MobileFirst Technologies'
+  },
+  {
+    id: '7',
+    internship_type: 'Government (12 months)',
+    sector: 'Education',
+    'area/field': 'Skill Development',
+    no_of_opportunities: 15,
+    description: 'Help implement skill development programs in rural and semi-urban areas. Train youth in various technical and vocational skills.',
+    'state/ut': 'BIHAR',
+    district: 'Patna',
+    minimum_qualification: 'Graduation',
+    course: 'Any',
+    specialization: '',
+    preferred_skills: ['Training', 'Hindi', 'Communication', 'Computer Skills'],
+    certification_name: [],
+    stipend: 9000,
+    duration: '12 months',
+    company: 'Ministry of Skill Development'
+  },
+  {
+    id: '8',
+    internship_type: 'Corporate (6 months)',
+    sector: 'Banking and financial Services',
+    'area/field': 'Digital Banking',
+    no_of_opportunities: 4,
+    description: 'Work on digital transformation initiatives in banking. Assist in developing and testing new digital banking features and services.',
+    'state/ut': 'DELHI',
+    district: 'New Delhi',
+    minimum_qualification: 'Graduation',
+    course: 'BCA',
+    specialization: 'Computer Applications',
+    preferred_skills: ['Digital Marketing', 'App Testing', 'Customer Service', 'Banking Knowledge'],
+    certification_name: [],
+    stipend: 14000,
+    duration: '6 months',
+    company: 'Digital Bank India'
+  },
+  {
+    id: '9',
+    internship_type: 'NGO (4 months)',
+    sector: 'Healthcare',
+    'area/field': 'Community Health',
+    no_of_opportunities: 12,
+    description: 'Support community health workers in providing healthcare services. Assist in health awareness campaigns and vaccination drives.',
+    'state/ut': 'WEST BENGAL',
+    district: 'Kolkata',
+    minimum_qualification: '12th',
+    course: 'Any',
+    specialization: '',
+    preferred_skills: ['Bengali', 'Health Awareness', 'Community Work', 'Basic Medical Knowledge'],
+    certification_name: [],
+    stipend: 7000,
+    duration: '4 months',
+    company: 'Health for All Foundation'
+  },
+  {
+    id: '10',
+    internship_type: 'Corporate (8 months)',
+    sector: 'Manufacturing & Industrial',
+    'area/field': 'Industrial Engineering',
+    no_of_opportunities: 3,
+    description: 'Learn about industrial processes, automation, and efficiency optimization. Work on improving manufacturing workflows and reducing waste.',
+    'state/ut': 'TAMIL NADU',
+    district: 'Chennai',
+    minimum_qualification: 'Graduation',
+    course: 'B.Tech',
+    specialization: 'Industrial Engineering',
+    preferred_skills: ['Process Improvement', 'AutoCAD', 'Lean Manufacturing', 'Data Analysis'],
+    certification_name: [],
+    stipend: 16000,
+    duration: '8 months',
+    company: 'Chennai Manufacturing Co.'
   }
 ];
 
@@ -411,11 +501,27 @@ export class RecommendationService {
           matchReasons
         };
       })
-      .filter(rec => rec.matchScore >= 30) // Only show decent matches
-      .sort((a, b) => b.matchScore - a.matchScore) // Sort by match score
-      .slice(0, 5); // Limit to top 5 recommendations
+      .filter(rec => rec.matchScore >= 20) // Lower threshold for more options
+      .sort((a, b) => b.matchScore - a.matchScore); // Sort by match score
 
-    return recommendations;
+    // Ensure we return 3-5 recommendations
+    const finalRecommendations = recommendations.slice(0, 5);
+    
+    // If we have less than 3, add some with lower scores
+    if (finalRecommendations.length < 3) {
+      const remaining = mockInternships
+        .filter(internship => !finalRecommendations.some(rec => rec.internship.id === internship.id))
+        .map(internship => {
+          const matchScore = Math.max(this.calculateMatchScore(mockProfile, internship), 25);
+          const matchReasons = this.generateMatchReasons(mockProfile, internship, matchScore);
+          return { internship, matchScore, matchReasons };
+        })
+        .slice(0, 3 - finalRecommendations.length);
+      
+      finalRecommendations.push(...remaining);
+    }
+
+    return finalRecommendations;
   }
 
   // Get all available sectors
@@ -429,5 +535,54 @@ export class RecommendationService {
       `${internship.district}, ${internship['state/ut']}`
     );
     return Array.from(new Set(locations));
+  }
+
+  // Get all internships with basic filtering
+  public async getAllInternships(filters?: {
+    sector?: string;
+    location?: string;
+    minStipend?: number;
+    maxStipend?: number;
+    internshipType?: string;
+  }): Promise<Internship[]> {
+    // Simulate API delay
+    await new Promise(resolve => setTimeout(resolve, 500));
+
+    let filteredInternships = [...mockInternships];
+
+    if (filters) {
+      if (filters.sector) {
+        filteredInternships = filteredInternships.filter(internship => 
+          internship.sector.toLowerCase().includes(filters.sector!.toLowerCase())
+        );
+      }
+
+      if (filters.location) {
+        filteredInternships = filteredInternships.filter(internship => 
+          internship.district.toLowerCase().includes(filters.location!.toLowerCase()) ||
+          internship['state/ut'].toLowerCase().includes(filters.location!.toLowerCase())
+        );
+      }
+
+      if (filters.minStipend !== undefined) {
+        filteredInternships = filteredInternships.filter(internship => 
+          internship.stipend && internship.stipend >= filters.minStipend!
+        );
+      }
+
+      if (filters.maxStipend !== undefined) {
+        filteredInternships = filteredInternships.filter(internship => 
+          internship.stipend && internship.stipend <= filters.maxStipend!
+        );
+      }
+
+      if (filters.internshipType) {
+        filteredInternships = filteredInternships.filter(internship => 
+          internship.internship_type.toLowerCase().includes(filters.internshipType!.toLowerCase())
+        );
+      }
+    }
+
+    return filteredInternships;
   }
 }

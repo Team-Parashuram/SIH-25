@@ -110,10 +110,24 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       
       // Mock Aadhaar verification
       if (data.otp === '123456' || data.otp.length === 6) {
+        // Try to get name from saved profile first
+        let userName = 'User';
+        try {
+          const savedProfile = localStorage.getItem('pm_internship_profile');
+          if (savedProfile) {
+            const profile = JSON.parse(savedProfile);
+            if (profile.name) {
+              userName = profile.name;
+            }
+          }
+        } catch (error) {
+          console.error('Error getting profile name:', error);
+        }
+
         const updatedUser: User = {
           ...authState.user!,
           aadhaarNumber: data.aadhaarNumber,
-          name: 'John Doe' // In real app, this would come from Aadhaar
+          name: userName // Use profile name if available, otherwise default
         };
         
         // Update localStorage

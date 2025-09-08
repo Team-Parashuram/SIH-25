@@ -71,10 +71,10 @@ export default function RecommendationList({
       <div className="flex justify-between items-center">
         <div>
           <h2 className="text-2xl font-bold text-gray-900">
-            🎯 Recommended for You
+            🎯 Top Recommendations for You
           </h2>
           <p className="text-gray-600 mt-1">
-            {recommendations.length} personalized internship{recommendations.length !== 1 ? 's' : ''} based on your profile
+            {recommendations.length} carefully selected internship{recommendations.length !== 1 ? 's' : ''} matching your profile
           </p>
         </div>
         
@@ -137,6 +137,23 @@ export default function RecommendationList({
             Complete your education details for better matching
           </li>
         </ul>
+      </div>
+
+      {/* Explore More Section */}
+      <div className="bg-gradient-to-r from-green-50 to-blue-50 rounded-xl p-6 mt-6">
+        <div className="text-center">
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">🔍 Want to explore more opportunities?</h3>
+          <p className="text-gray-600 mb-4">
+            Browse through all available internships and discover opportunities across various sectors and locations.
+          </p>
+          <a 
+            href="/internships"
+            className="inline-flex items-center bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors font-medium"
+          >
+            View All Internships
+            <span className="ml-2">→</span>
+          </a>
+        </div>
       </div>
     </div>
   );
