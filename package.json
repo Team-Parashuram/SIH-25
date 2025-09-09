@@ -8,10 +8,6 @@
     "lint": "pnpm --recursive lint",
     "prepare": "husky"
   },
-  "workspaces": [
-    "internship",
-    "namaste"
-  ],
   "devDependencies": {
     "husky": "^9.1.7",
     "lint-staged": "^16.1.6",
