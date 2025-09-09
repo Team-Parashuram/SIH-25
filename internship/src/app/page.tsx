@@ -58,7 +58,7 @@ export default function Home() {
   }, [user?.id, recommendationService]);
 
   useEffect(() => {
-    console.log('Auth state changed:', { isAuthenticated, user, loading, currentStep });
+    console.log('Auth state changed:', { isAuthenticated, user, loading });
     if (loading) return;
 
     // Get user name from profile or auth
