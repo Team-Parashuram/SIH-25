@@ -1,4 +1,4 @@
-# Smart India Hackathon (SIH) Problem Statements
+# (SIH) Smart India Hackathon Problem Statements
 
 - **25026** – 🏥 [**Ministry of Ayush – API Integration for NAMASTE & ICD-11 (TM-2)**](https://namaste-sih.vercel.app)
 - **25034** – 🧩 [**PM Internship Smart Scheme Recommendation Engine**](https://internship-sih.vercel.app)
