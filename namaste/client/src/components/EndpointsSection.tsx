@@ -38,31 +38,45 @@ const EndpointsSection: React.FC = () => {
     };
 
     return (
-        <Card>
-        <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-            <Link className="h-5 w-5" />
-            Available API Endpoints
+        <Card className="border-2 border-gray-200 shadow-md">
+        <CardHeader className="bg-gradient-to-r from-indigo-50 to-blue-50 border-b border-gray-100">
+            <CardTitle className="flex items-center gap-3 text-gray-800">
+                <div className="p-2 bg-indigo-100 rounded-lg">
+                    <Link className="h-5 w-5 text-indigo-600" />
+                </div>
+                <div>
+                    <h3 className="text-lg font-semibold">Available API Endpoints</h3>
+                    <p className="text-sm text-gray-600 font-normal">Complete API documentation and endpoints</p>
+                </div>
             </CardTitle>
         </CardHeader>
-        <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <CardContent className="p-6">
+            <div className="bg-indigo-50 border border-indigo-200 rounded-lg p-4 mb-6">
+                <h4 className="font-medium text-indigo-900 mb-2">API Documentation</h4>
+                <p className="text-sm text-indigo-700">
+                    Complete list of available REST API endpoints for NAMASTE, FHIR, and WHO ICD-11 integration services.
+                </p>
+            </div>
+            
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {endpointGroups.map((group, index) => (
-                <div key={index} className="space-y-4">
-                <h3 className="font-semibold text-blue-600">{group.title}</h3>
-                <div className="space-y-2">
-                    {group.endpoints.map((endpoint, endpointIndex) => (
-                    <div 
-                        key={endpointIndex} 
-                        className="flex justify-between items-center py-2 border-b last:border-b-0"
-                    >
-                        <span className="text-sm">{endpoint.name}</span>
-                        <span className={`px-2 py-1 rounded text-xs font-bold ${getMethodBadgeClass(endpoint.method)}`}>
-                        {endpoint.method}
-                        </span>
+                <div key={index} className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+                    <h3 className="font-bold text-gray-900 text-base mb-4 pb-2 border-b-2 border-indigo-200">
+                        {group.title}
+                    </h3>
+                    <div className="space-y-3">
+                        {group.endpoints.map((endpoint, endpointIndex) => (
+                        <div 
+                            key={endpointIndex} 
+                            className="flex justify-between items-center py-3 px-3 bg-gray-50 rounded-md border border-gray-100 hover:bg-gray-100 transition-colors duration-150"
+                        >
+                            <span className="text-sm font-medium text-gray-700">{endpoint.name}</span>
+                            <span className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide ${getMethodBadgeClass(endpoint.method)}`}>
+                            {endpoint.method}
+                            </span>
+                        </div>
+                        ))}
                     </div>
-                    ))}
-                </div>
                 </div>
             ))}
             </div>

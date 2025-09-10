@@ -10,29 +10,46 @@ const ApiStatusSection: React.FC = () => {
 
     useEffect(() => {
         checkApiStatus();
-    }, [checkApiStatus]);
+//eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
-        <Card>
-        <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-            <Activity className="h-5 w-5" />
-            API Server Status
+        <Card className="border-2 border-gray-200 shadow-md">
+        <CardHeader className="bg-gradient-to-r from-green-50 to-blue-50 border-b border-gray-100">
+            <CardTitle className="flex items-center gap-3 text-gray-800">
+                <div className="p-2 bg-green-100 rounded-lg">
+                    <Activity className="h-5 w-5 text-green-600" />
+                </div>
+                <div>
+                    <h3 className="text-lg font-semibold">System Health Monitor</h3>
+                    <p className="text-sm text-gray-600 font-normal">Real-time API server status</p>
+                </div>
             </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
-            <Button onClick={checkApiStatus} disabled={loading}>
-            {loading ? (
-                <Loader2 className="h-4 w-4 animate-spin mr-2" />
-            ) : (
-                <CheckCircle className="h-4 w-4 mr-2" />
-            )}
-            Check Server Health
-            </Button>
+        <CardContent className="space-y-6 p-6">
+            <div className="flex justify-center">
+                <Button 
+                    onClick={checkApiStatus} 
+                    disabled={loading}
+                    className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 text-base font-medium rounded-lg shadow-md transition-all duration-200 disabled:opacity-50"
+                >
+                    {loading ? (
+                        <>
+                            <Loader2 className="h-5 w-5 animate-spin mr-3" />
+                            Checking Status...
+                        </>
+                    ) : (
+                        <>
+                            <CheckCircle className="h-5 w-5 mr-3" />
+                            Check Server Health
+                        </>
+                    )}
+                </Button>
+            </div>
             <ResultDisplay 
-            data={data} 
-            error={error} 
-            loading={loading} 
+                data={data} 
+                error={error} 
+                loading={loading} 
             />
         </CardContent>
         </Card>

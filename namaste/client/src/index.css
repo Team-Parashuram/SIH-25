@@ -112,9 +112,88 @@
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    border-color: hsl(var(--border));
+    outline: hsl(var(--ring) / 0.5);
   }
+  
   body {
-    @apply bg-background text-foreground;
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    font-family: 'Inter', 'Segoe UI', 'Roboto', 'Helvetica', sans-serif;
+    overflow-x: hidden;
+  }
+  
+  html {
+    overflow-x: hidden;
+  }
+  
+  /* Prevent horizontal scroll */
+  * {
+    box-sizing: border-box;
+  }
+}
+
+/* Government-specific utility classes */
+@layer components {
+  .gov-card {
+    background-color: white;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    border-radius: 0.5rem;
+  }
+  
+  .gov-header {
+    background-color: #1e3a8a;
+    color: white;
+  }
+  
+  .gov-button-primary {
+    background-color: #1d4ed8;
+    color: white;
+    font-weight: 500;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.375rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.2s;
+  }
+  
+  .gov-button-primary:hover {
+    background-color: #1e40af;
+  }
+  
+  .gov-button-secondary {
+    background-color: #f3f4f6;
+    color: #374151;
+    font-weight: 500;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.375rem;
+    border: 1px solid #d1d5db;
+    transition: background-color 0.2s;
+  }
+  
+  .gov-button-secondary:hover {
+    background-color: #e5e7eb;
+  }
+  
+  .gov-input {
+    border: 2px solid #d1d5db;
+    border-radius: 0.375rem;
+    padding: 0.75rem 1rem;
+    transition: border-color 0.2s;
+  }
+  
+  .gov-input:focus {
+    border-color: #3b82f6;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  }
+  
+  .gov-section-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #374151;
+    border-bottom: 2px solid #2563eb;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
   }
 }

@@ -30,59 +30,92 @@ interface ConditionSectionProps {
     };
 
     return (
-        <Card>
-        <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-            <Hospital className="h-5 w-5" />
-            Create Dual-Coded FHIR Condition
+        <Card className="border-2 border-gray-200 shadow-md">
+        <CardHeader className="bg-gradient-to-r from-orange-50 to-red-50 border-b border-gray-100">
+            <CardTitle className="flex items-center gap-3 text-gray-800">
+                <div className="p-2 bg-orange-100 rounded-lg">
+                    <Hospital className="h-5 w-5 text-orange-600" />
+                </div>
+                <div>
+                    <h3 className="text-lg font-semibold">Create Dual-Coded FHIR Condition</h3>
+                    <p className="text-sm text-gray-600 font-normal">Generate patient condition records with dual coding</p>
+                </div>
             </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="space-y-2">
-                <Label htmlFor="condition-code">NAMASTE Code</Label>
-                <Input
-                id="condition-code"
-                value={conditionCode}
-                onChange={(e) => setConditionCode(e.target.value)}
-                placeholder="A001"
-                />
+        <CardContent className="space-y-6 p-6">
+            <div className="bg-orange-50 border border-orange-200 rounded-lg p-4">
+                <h4 className="font-medium text-orange-900 mb-2">FHIR Condition Resource</h4>
+                <p className="text-sm text-orange-700">
+                    Create FHIR Condition resources that include both traditional medicine codes (NAMASTE) and international standards (ICD-11) for comprehensive patient records.
+                </p>
             </div>
-            <div className="space-y-2">
-                <Label htmlFor="condition-system">System</Label>
-                <Select value={conditionSystem} onValueChange={(value: MedicineSystem) => setConditionSystem(value)}>
-                <SelectTrigger>
-                    <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                    <SelectItem value="ayurveda">Ayurveda</SelectItem>
-                    <SelectItem value="siddha">Siddha</SelectItem>
-                    <SelectItem value="unani">Unani</SelectItem>
-                </SelectContent>
-                </Select>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="space-y-3">
+                    <Label htmlFor="condition-code" className="text-sm font-semibold text-gray-700">
+                        NAMASTE Code <span className="text-red-500">*</span>
+                    </Label>
+                    <Input
+                        id="condition-code"
+                        value={conditionCode}
+                        onChange={(e) => setConditionCode(e.target.value)}
+                        placeholder="A001"
+                        className="w-full border-2 border-gray-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-200 rounded-md px-4 py-3"
+                    />
+                </div>
+                <div className="space-y-3">
+                    <Label htmlFor="condition-system" className="text-sm font-semibold text-gray-700">
+                        Medical System <span className="text-red-500">*</span>
+                    </Label>
+                    <Select value={conditionSystem} onValueChange={(value: MedicineSystem) => setConditionSystem(value)}>
+                        <SelectTrigger className="w-full border-2 border-gray-300 focus:border-orange-500 rounded-md px-4 py-3">
+                            <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="ayurveda">Ayurveda</SelectItem>
+                            <SelectItem value="siddha">Siddha</SelectItem>
+                            <SelectItem value="unani">Unani</SelectItem>
+                        </SelectContent>
+                    </Select>
+                </div>
+                <div className="space-y-3">
+                    <Label htmlFor="condition-patient" className="text-sm font-semibold text-gray-700">
+                        Patient ID <span className="text-red-500">*</span>
+                    </Label>
+                    <Input
+                        id="condition-patient"
+                        value={conditionPatient}
+                        onChange={(e) => setConditionPatient(e.target.value)}
+                        placeholder="patient-123"
+                        className="w-full border-2 border-gray-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-200 rounded-md px-4 py-3"
+                    />
+                </div>
             </div>
-            <div className="space-y-2">
-                <Label htmlFor="condition-patient">Patient ID</Label>
-                <Input
-                id="condition-patient"
-                value={conditionPatient}
-                onChange={(e) => setConditionPatient(e.target.value)}
-                placeholder="patient-123"
-                />
+            
+            <div className="flex justify-center pt-4">
+                <Button 
+                    onClick={handleCreate} 
+                    disabled={loading || !conditionCode.trim() || !conditionPatient.trim()}
+                    className="bg-orange-600 hover:bg-orange-700 text-white px-8 py-3 text-base font-medium rounded-lg shadow-md transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                    {loading ? (
+                        <>
+                            <Loader2 className="h-5 w-5 animate-spin mr-3" />
+                            Creating...
+                        </>
+                    ) : (
+                        <>
+                            <Hospital className="h-5 w-5 mr-3" />
+                            Create FHIR Condition
+                        </>
+                    )}
+                </Button>
             </div>
-            </div>
-            <Button onClick={handleCreate} disabled={loading}>
-            {loading ? (
-                <Loader2 className="h-4 w-4 animate-spin mr-2" />
-            ) : (
-                <Hospital className="h-4 w-4 mr-2" />
-            )}
-            Create FHIR Condition
-            </Button>
+            
             <ResultDisplay 
-            data={data} 
-            error={error} 
-            loading={loading} 
+                data={data} 
+                error={error} 
+                loading={loading} 
             />
         </CardContent>
         </Card>

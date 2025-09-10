@@ -22,11 +22,11 @@ const NamasteFhirDemo: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-blue-500 to-purple-600 p-4">
-        <div className="max-w-6xl mx-auto">
+        <div className="min-h-screen bg-gray-50 px-4 py-6">
+        <div className="w-full max-w-6xl mx-auto">
             <DemoHeader onLoadSampleData={populateSampleData} />
             
-            <div className="grid gap-6">
+            <div className="space-y-6">
             <ApiStatusSection />
             
             <CodeSearchSection 
