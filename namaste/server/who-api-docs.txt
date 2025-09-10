@@ -87,9 +87,6 @@ WHO-IDC-11 of ayush website :- https://namaste.ayush.gov.in/icd10
 
 
 
-
-
-
 Setting up prisma :- 
 pnpm add prisma @prisma/client
 npx prisma init
@@ -169,5 +166,16 @@ System Information
 GET http://localhost:3000/api/v1/namaste/systems
 GET http://localhost:3000/api/v1/namaste/stats
 
+
+### **FHIR R4 Compliant APIs** 
+```
+✅ GET  /fhir/metadata                    # Server capability statement
+✅ GET  /fhir/CodeSystem/namaste-:system  # FHIR CodeSystems  
+✅ GET  /fhir/ConceptMap/namaste-:system-to-icd11 # FHIR ConceptMaps
+✅ POST /fhir/Condition                   # Dual-coded conditions
+✅ POST /fhir/Bundle                      # FHIR Bundle processing
+✅ POST /fhir/translate                   # Code translation service
+✅ POST /fhir/dual-code                   # Dual coding generation
+```
 */
 

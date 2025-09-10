@@ -6,6 +6,7 @@ import cors from 'cors';
 import { Request, Response } from 'express';
 import { router as whoRoutes } from './routers/who.routes.js';
 import { router as namasteRoutes } from './routers/namaste.routes.js';
+import { router as fhirRoutes } from './routers/fhir.routes.js';
 import { ApiResponse } from './utils/response.util.js';
 import { HealthResponse, ApiInfoResponse } from './types/who.types.js';
 import DatabaseClient from './database/client.js';
@@ -20,6 +21,7 @@ const port = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use('/demo', express.static('public'));
 app.use(morgan('combined', {
     stream: {
         write: (message: string) => logger.http(message.trim()),
@@ -48,6 +50,7 @@ app.get('/health', async (req: Request, res: Response) => {
 
 app.use('/api/v1/who', whoRoutes);
 app.use('/api/v1/namaste', namasteRoutes);
+app.use('/fhir', fhirRoutes);
 
 app.get('/', (req: Request, res: Response) => {
     const apiInfo: ApiInfoResponse = {
@@ -59,7 +62,13 @@ app.get('/', (req: Request, res: Response) => {
             whoEntity: '/api/v1/who/entity/:entityId',
             namasteUpload: '/api/v1/namaste/upload',
             namasteStats: '/api/v1/namaste/stats',
-            namasteSystems: '/api/v1/namaste/systems'
+            namasteSystems: '/api/v1/namaste/systems',
+            fhirCodeSystems: '/fhir/CodeSystem',
+            fhirConceptMaps: '/fhir/ConceptMap',
+            fhirConditions: '/fhir/Condition',
+            fhirBundles: '/fhir/Bundle',
+            fhirMetadata: '/fhir/metadata',
+            fhirTranslate: '/fhir/translate'
         }
     };
     logger.info('Root endpoint accessed');

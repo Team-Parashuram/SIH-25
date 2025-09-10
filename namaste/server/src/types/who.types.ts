@@ -65,5 +65,11 @@ export interface ApiInfoResponse {
         namasteUpload?: string;
         namasteStats?: string;
         namasteSystems?: string;
+        fhirCodeSystems?: string;
+        fhirConceptMaps?: string;
+        fhirConditions?: string;
+        fhirBundles?: string;
+        fhirMetadata?: string;
+        fhirTranslate?: string;
     };
 }
