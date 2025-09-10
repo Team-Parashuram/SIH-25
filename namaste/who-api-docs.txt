@@ -1,0 +1,181 @@
+
+/*
+First get your token from - https://icdaccessmanagement.who.int/connect/token
+In body then Form-encode set up :- 
+grant_type = client_credentials
+scope = icdapi_access 
+
+Then in Auth set up:- 
+username: <your client id>
+password: <your client secret>
+client id and client secret you will get from - https://icdapihome2-eme0b9bdf4fafkbg.northeurope-01.azurewebsites.net/icdapi
+
+Then use your token here :- 
+https://id.who.int/icd/entity/257068234 
+Here 257068234 is the entity ID which in this case is Cholera 
+In this in Auth header use Bearer <your_token>
+In headers add :- 
+API-Version:v2
+Accept: application/json
+Accept-Language: en
+
+Then make the get request, you will get the result...
+Result is in this format :- 
+{
+  "@context": "http://id.who.int/icd/contexts/contextForFoundationEntity.json",
+  "@id": "http://id.who.int/icd/entity/257068234",
+  "parent": [
+    "http://id.who.int/icd/entity/135352227"
+  ],
+  "child": [
+    "http://id.who.int/icd/entity/1170831944",
+    "http://id.who.int/icd/entity/1205958647",
+    "http://id.who.int/icd/entity/581614179",
+    "http://id.who.int/icd/entity/1972085775"
+  ],
+  "browserUrl": "https://icd.who.int/browse/2025-01/foundation/en#257068234",
+  "title": {
+    "@language": "en",
+    "@value": "Cholera"
+  },
+  "synonym": [
+    {
+      "label": {
+        "@language": "en",
+        "@value": "cholera syndrome"
+      }
+    },
+    {
+      "label": {
+        "@language": "en",
+        "@value": "asiatic cholera"
+      }
+    },
+    {
+      "label": {
+        "@language": "en",
+        "@value": "epidemic cholera"
+      }
+    }
+  ],
+  "definition": {
+    "@language": "en",
+    "@value": "Cholera is a potentially epidemic and life-threatening infection of the intestine, characterised by extreme watery (secretory) diarrhoea often accompanied by vomiting, with rapid depletion of body fluids and salt that may result in hypovolemic shock and acidosis. Cholera outbreaks are caused by toxigenic strains of Vibrio cholerae serogroups O1 and O139. Serogroup O1 has two biovars; classical and eltor. Vibrio cholerae O1, biovar cholerae is classical type. Vibrio cholerae O1, biovar eltor is eltor type."
+  },
+  "inclusion": [
+    {
+      "label": {
+        "@language": "en",
+        "@value": "cholera syndrome"
+      }
+    }
+  ],
+  "fullySpecifiedName": {
+    "@language": "en",
+    "@value": "Intestinal infection due to Vibrio cholerae"
+  },
+  "relatedEntitiesInPerinatalChapter": [
+    "http://id.who.int/icd/entity/911707612"
+  ]
+}
+
+WHO ICD API docs :- https://icd.who.int/docs/icd-api/API-Authentication/
+
+WHO Ayurveda Terminologies pdf link :- https://iris.who.int/bitstream/handle/10665/365543/9789240064935-eng.pdf?sequence=1
+WHO-IDC-11 of ayush website :- https://namaste.ayush.gov.in/icd11
+WHO-IDC-11 of ayush website :- https://namaste.ayush.gov.in/icd10
+
+
+
+Setting up prisma :- 
+pnpm add prisma @prisma/client
+npx prisma init
+npx prisma generate
+npx prisma migrate dev --name init
+
+
+What is Code field in generated table ? 
+
+Code Field Analysis :-
+EF-2.2.11 (SM8D)  → surAmehaH      (ayurveda)
+EF-2.2.12 (SM8D)  → lavaNamehaH    (ayurveda) 
+EF-2.2.13 (SM8D)  → piShTamehaH    (ayurveda)
+EF-2.2.14 (SM8D)  → PenamehaH      (ayurveda)
+EF-2.3 (SM8D)     → [incomplete]    (ayurveda)
+
+EF-2.2.11 (SM8D)
+│  │ │ │   │
+│  │ │ │   └── Source identifier (SM8D)
+│  │ │ └────── Sub-category level 3
+│  │ └──────── Sub-category level 2  
+│  └────────── Main category level 1
+└──────────── System prefix (EF = likely "Essential Features")
+
+Ayurveda System Codes:
+EF-2.2.11 = surAmehaH (सुरामेहः) - "wine diabetes/urination"
+EF-2.2.12 = lavaNamehaH (लवणमेहः) - "salt diabetes/urination"
+EF-2.2.13 = piShTamehaH (पिष्टमेहः) - "flour diabetes/urination"
+EF-2.2.14 = PenamehaH (फेनमेहः) - "frothy diabetes/urination"
+
+[PREFIX]-[MAJOR].[MINOR].[SUB] ([SOURCE])
+
+Examples:
+- EF-2.2.11 (SM8D)
+- DIS-1.3.5 (AYUSH)
+- O-6 (UNANI)
+
+Ayurveda Codes:
+  EF- prefix = Essential Features/Elements
+  Format: EF-X.Y.Z (SM8D)
+  Represents: Hierarchical classification of Ayurvedic conditions
+
+Siddha Codes:
+  NAMC_CODE from Siddha Excel
+  Format: Similar hierarchical structure
+  Represents: Tamil traditional medicine terminology
+
+Unani Codes:
+  NUMC_CODE from Unani Excel (Note: Different prefix)
+  Format: O-X or similar patterns
+
+
+Routes :- 
+
+WHO Integration
+GET http://localhost:3000/api/v1/who/token
+GET http://localhost:3000/api/v1/who/entity/some-id
+
+
+File Upload
+POST http://localhost:3000/api/v1/namaste/upload
+
+
+Code Retrieval
+GET http://localhost:3000/api/v1/namaste/codes/ayurveda?page=1&limit=20
+GET http://localhost:3000/api/v1/namaste/codes/ayurveda/AA
+GET http://localhost:3000/api/v1/namaste/codes/siddha/LAC1.3
+
+
+Search & Discovery
+GET http://localhost:3000/api/v1/namaste/search?q=k&limit=10
+GET http://localhost:3000/api/v1/namaste/autocomplete?q=k&limit=5
+GET http://localhost:3000/api/v1/namaste/random?count=10
+
+
+System Information
+GET http://localhost:3000/api/v1/namaste/systems
+GET http://localhost:3000/api/v1/namaste/stats
+
+
+### **FHIR R4 Compliant APIs** 
+```
+✅ GET  /fhir/metadata                    # Server capability statement
+✅ GET  /fhir/CodeSystem/namaste-:system  # FHIR CodeSystems  
+✅ GET  /fhir/ConceptMap/namaste-:system-to-icd11 # FHIR ConceptMaps
+✅ POST /fhir/Condition                   # Dual-coded conditions
+✅ POST /fhir/Bundle                      # FHIR Bundle processing
+✅ POST /fhir/translate                   # Code translation service
+✅ POST /fhir/dual-code                   # Dual coding generation
+```
+*/
+

@@ -1,10 +1,11 @@
 export interface Internship {
+  id?: string; // Optional ID for UI purposes
   internship_type: string;
   sector: string;
-  "area/field": string;
+  'area/field': string;
   no_of_opportunities: number;
   description: string;
-  "state/ut": string;
+  'state/ut': string;
   district: string;
   minimum_qualification: string;
   course: string;
@@ -12,45 +13,38 @@ export interface Internship {
   preferred_skills: string[];
   certification_name: string[];
   special_requirements: string[];
+  // Optional fields for backwards compatibility
+  stipend?: number;
+  duration?: string;
+  company?: string;
+  applicationDeadline?: string;
 }
 
-export interface CandidateProfile {
-  name: string;
-  education: {
-    qualification: string;
-    course: string;
-    specialization: string;
-  };
-  location: {
-    state: string;
-    district: string;
-  };
-  skills: string[];
-  interests: string[];
-  preferredSectors: string[];
-  isRural: boolean;
-  digitalLiteracy: 'low' | 'medium' | 'high';
-}
-
-export interface RecommendationResult {
+export interface InternshipRecommendation {
   internship: Internship;
-  score: number;
+  matchScore: number;
   matchReasons: string[];
-  confidence?: number;
-  mlMetrics?: {
-    semanticSimilarity: number;
-    skillAlignment: number;
-    profileMatch: number;
-    locationRelevance: number;
-  };
 }
 
-export type QualificationLevel = '10th' | '12th' | 'ITI' | 'Diploma' | 'Graduation';
+export interface RecommendationFilters {
+  sector?: string;
+  location?: string;
+  qualification?: string;
+  skills?: string[];
+  internshipType?: string;
+}
 
-export const QUALIFICATION_HIERARCHY: Record<QualificationLevel, number> = {
-  '10th': 1,
-  '12th': 2,
-  'ITI': 2,
-  'Diploma': 3,
-  'Graduation': 4,
-};
+export interface RecommendationRequest {
+  userId: string;
+  profile: {
+    education: Array<{
+      level: string;
+      course: string;
+      specialization: string;
+    }>;
+    skills: string[];
+    sectorInterests: string[];
+    locationPreferences: string[];
+  };
+  filters?: RecommendationFilters;
+}

@@ -1,29 +1,21 @@
-import "./globals.css";
-import type { Metadata, Viewport } from "next";
+import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { AuthProvider } from "@/contexts/AuthContext";
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+import "./globals.css";
+import { AuthProvider } from "../hooks/useAuth";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "PM Internship Smart Recommendations | Find Your Perfect Match",
-  description: "AI-powered internship recommendation system for PM Internship Scheme. Get personalized matches based on your skills, education, and location preferences.",
-  keywords: "PM Internship, internship recommendations, career matching, government internships, skill-based matching",
-};
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
 
-export const viewport: Viewport = {
-  width: "device-width",
-  initialScale: 1,
-  maximumScale: 1,
-  themeColor: "#2563eb",
+export const metadata: Metadata = {
+  title: "PM Internship Portal - Find Your Perfect Internship",
+  description: "AI-powered internship recommendations for students across India. Simple, mobile-friendly, and designed for first-generation learners.",
 };
 
 export default function RootLayout({
