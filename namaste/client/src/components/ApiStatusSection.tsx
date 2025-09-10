@@ -10,7 +10,7 @@ const ApiStatusSection: React.FC = () => {
 
     useEffect(() => {
         checkApiStatus();
-    }, []);
+    }, [checkApiStatus]);
 
     return (
         <Card>

@@ -1,5 +1,5 @@
 export interface ApiResponse {
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 export interface ApiState {
