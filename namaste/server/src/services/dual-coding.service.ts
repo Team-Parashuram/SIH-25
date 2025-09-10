@@ -1,5 +1,5 @@
 import { Coding } from 'fhir/r4';
-import { whoService } from '../services/who.service.js';
+import { whoService } from './who.service.js';
 import { databaseService } from '../database/service.js';
 import logger from '../utils/logger.js';
 
