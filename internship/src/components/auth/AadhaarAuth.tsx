@@ -2,6 +2,10 @@
 
 import { useState } from 'react';
 import { AadhaarAuthData } from '../../types/auth';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Shield, ArrowLeft, CreditCard, Loader2 } from 'lucide-react';
 
 interface AadhaarAuthProps {
   onSubmit: (data: AadhaarAuthData) => Promise<void>;
@@ -69,143 +73,190 @@ export default function AadhaarAuth({ onSubmit, onSkip, loading = false }: Aadha
 
   if (step === 'otp') {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center p-4">
-        <div className="bg-white rounded-xl shadow-2xl border border-gray-200 p-8 w-full max-w-md">
-          <div className="text-center mb-8">
-            <div className="mx-auto mb-4 h-16 w-16 bg-orange-100 rounded-full flex items-center justify-center">
-              <span className="text-2xl">🆔</span>
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-orange-50 to-green-50 flex items-center justify-center p-4">
+        <Card className="w-full max-w-md shadow-xl border-0 bg-white/95 backdrop-blur-sm">
+          <CardHeader className="text-center space-y-4 pb-6">
+            <div className="mx-auto w-16 h-16 bg-gradient-to-br from-orange-500 to-orange-600 rounded-full flex items-center justify-center shadow-lg">
+              <Shield className="w-8 h-8 text-white" />
             </div>
-            <h1 className="text-3xl font-bold text-black mb-2">Aadhaar OTP</h1>
-            <p className="text-black text-base">
-              Enter OTP sent to your Aadhaar-linked mobile number
-            </p>
-          </div>
-
-          <form onSubmit={handleOtpSubmit} className="space-y-6">
             <div>
-              <label className="block text-sm font-semibold text-black mb-4 text-center">
-                Enter Aadhaar OTP
-              </label>
-              <div className="flex justify-center space-x-3">
-                {otp.map((digit, index) => (
-                  <input
-                    key={index}
-                    id={`aadhaar-otp-${index}`}
-                    type="text"
-                    value={digit}
-                    onChange={(e) => handleOtpChange(index, e.target.value)}
-                    className={`w-14 h-14 text-center text-xl font-bold border-2 rounded-lg bg-white text-black focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors ${
-                      errors.otp ? 'border-red-500' : 'border-gray-300 hover:border-orange-300'
-                    }`}
-                    maxLength={1}
-                    disabled={loading}
-                  />
-                ))}
-              </div>
-              {errors.otp && (
-                <p className="mt-3 text-sm text-red-600 text-center font-medium">{errors.otp}</p>
-              )}
+              <CardTitle className="text-2xl font-bold text-gray-900 mb-2">
+                Aadhaar OTP Verification
+              </CardTitle>
+              <p className="text-gray-600 text-sm leading-relaxed">
+                Enter the 6-digit OTP sent to your Aadhaar-linked mobile number
+              </p>
             </div>
+          </CardHeader>
 
-            <div className="space-y-3">
-              <button
-                type="submit"
-                disabled={loading}
-                className="w-full bg-orange-600 text-white py-4 px-6 rounded-lg font-semibold text-lg hover:bg-orange-700 focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-lg hover:shadow-xl"
-              >
-                {loading ? (
-                  <div className="flex items-center justify-center">
-                    <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white mr-3"></div>
-                    Verifying...
-                  </div>
-                ) : (
-                  'Verify Aadhaar'
+          <CardContent className="space-y-6">
+            <form onSubmit={handleOtpSubmit} className="space-y-6">
+              <div className="space-y-3">
+                <label className="block text-sm font-semibold text-gray-800">
+                  One-Time Password (OTP)
+                </label>
+                <div className="flex justify-center gap-2">
+                  {otp.map((digit, index) => (
+                    <Input
+                      key={index}
+                      id={`aadhaar-otp-${index}`}
+                      type="text"
+                      value={digit}
+                      onChange={(e) => handleOtpChange(index, e.target.value)}
+                      className={`w-12 h-12 text-center text-lg font-bold border-2 rounded-lg transition-colors ${
+                        errors.otp 
+                          ? 'border-red-500 focus:border-red-500 focus:ring-red-200' 
+                          : 'border-blue-200 focus:border-orange-500 focus:ring-orange-100 hover:border-blue-300'
+                      }`}
+                      maxLength={1}
+                      disabled={loading}
+                    />
+                  ))}
+                </div>
+                {errors.otp && (
+                  <p className="text-sm text-red-600 text-center font-medium bg-red-50 p-2 rounded-md border border-red-200">
+                    {errors.otp}
+                  </p>
                 )}
-              </button>
+              </div>
 
-              <button
-                type="button"
-                onClick={() => setStep('aadhaar')}
-                disabled={loading}
-                className="w-full bg-white text-black py-4 px-6 rounded-lg font-semibold border-2 border-gray-300 hover:border-orange-500 hover:text-orange-600 focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
-              >
-                ← Back
-              </button>
+              <div className="space-y-3 pt-2">
+                <Button
+                  type="submit"
+                  disabled={loading}
+                  className="w-full h-12 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-semibold text-base rounded-lg shadow-lg hover:shadow-xl transition-all duration-200"
+                >
+                  {loading ? (
+                    <div className="flex items-center justify-center gap-2">
+                      <Loader2 className="w-5 h-5 animate-spin" />
+                      Verifying OTP...
+                    </div>
+                  ) : (
+                    <div className="flex items-center justify-center gap-2">
+                      <Shield className="w-5 h-5" />
+                      Verify Aadhaar
+                    </div>
+                  )}
+                </Button>
+
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => setStep('aadhaar')}
+                  disabled={loading}
+                  className="w-full h-12 border-2 border-blue-200 text-blue-700 hover:bg-blue-50 hover:border-blue-300 font-semibold rounded-lg transition-all duration-200"
+                >
+                  <ArrowLeft className="w-4 h-4 mr-2" />
+                  Back to Aadhaar Entry
+                </Button>
+              </div>
+            </form>
+
+            <div className="pt-4 border-t border-gray-100">
+              <div className="flex items-center justify-center gap-2 text-sm text-gray-600 bg-blue-50 p-3 rounded-lg">
+                <Shield className="w-4 h-4 text-blue-600" />
+                <span>Your data is protected with 256-bit encryption</span>
+              </div>
             </div>
-          </form>
-        </div>
+          </CardContent>
+        </Card>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-white flex items-center justify-center p-4">
-      <div className="bg-white rounded-xl shadow-2xl border border-gray-200 p-8 w-full max-w-md">
-        <div className="text-center mb-8">
-          <div className="mx-auto mb-4 h-16 w-16 bg-orange-100 rounded-full flex items-center justify-center">
-            <span className="text-2xl">🆔</span>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-orange-50 to-green-50 flex items-center justify-center p-4">
+      <Card className="w-full max-w-md shadow-xl border-0 bg-white/95 backdrop-blur-sm">
+        <CardHeader className="text-center space-y-4 pb-6">
+          <div className="mx-auto w-16 h-16 bg-gradient-to-br from-blue-600 to-blue-700 rounded-full flex items-center justify-center shadow-lg">
+            <CreditCard className="w-8 h-8 text-white" />
           </div>
-          <h1 className="text-3xl font-bold text-black mb-2">Aadhaar Verification</h1>
-          <p className="text-black text-base">
-            Link your Aadhaar for secure authentication (Optional)
-          </p>
-        </div>
-
-        <form onSubmit={handleAadhaarSubmit} className="space-y-6">
           <div>
-            <label htmlFor="aadhaarNumber" className="block text-sm font-semibold text-black mb-3">
-              🆔 Aadhaar Number
-            </label>
-            <input
-              type="text"
-              id="aadhaarNumber"
-              value={aadhaarNumber}
-              onChange={(e) => setAadhaarNumber(e.target.value.replace(/\D/g, '').slice(0, 12))}
-              className={`w-full px-4 py-4 border-2 rounded-lg bg-white text-black font-medium focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors ${
-                errors.aadhaar ? 'border-red-500' : 'border-gray-300 hover:border-orange-300'
-              }`}
-              placeholder="Enter 12-digit Aadhaar number"
-              maxLength={12}
-              disabled={loading}
-            />
-            {errors.aadhaar && (
-              <p className="mt-2 text-sm text-red-600 font-medium">{errors.aadhaar}</p>
-            )}
+            <CardTitle className="text-2xl font-bold text-gray-900 mb-2">
+              Aadhaar Verification
+            </CardTitle>
+            <p className="text-gray-600 text-sm leading-relaxed">
+              Link your Aadhaar for secure authentication
+              <span className="block text-green-600 font-medium mt-1">(Optional)</span>
+            </p>
           </div>
+        </CardHeader>
 
-          <div className="space-y-3">
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full bg-orange-600 text-white py-4 px-6 rounded-lg font-semibold text-lg hover:bg-orange-700 focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-lg hover:shadow-xl"
-            >
-              {loading ? (
-                <div className="flex items-center justify-center">
-                  <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white mr-3"></div>
-                  Sending OTP...
-                </div>
-              ) : (
-                'Send Aadhaar OTP'
+        <CardContent className="space-y-6">
+          <form onSubmit={handleAadhaarSubmit} className="space-y-6">
+            <div className="space-y-3">
+              <label htmlFor="aadhaarNumber" className="flex items-center gap-2 text-sm font-semibold text-gray-800">
+                <CreditCard className="w-4 h-4 text-blue-600" />
+                Aadhaar Number
+              </label>
+              <Input
+                type="text"
+                id="aadhaarNumber"
+                value={aadhaarNumber}
+                onChange={(e) => setAadhaarNumber(e.target.value.replace(/\D/g, '').slice(0, 12))}
+                className={`h-12 text-base font-medium border-2 transition-colors ${
+                  errors.aadhaar 
+                    ? 'border-red-500 focus:border-red-500 focus:ring-red-200' 
+                    : 'border-blue-200 focus:border-orange-500 focus:ring-orange-100 hover:border-blue-300'
+                }`}
+                placeholder="Enter your 12-digit Aadhaar number"
+                maxLength={12}
+                disabled={loading}
+              />
+              {errors.aadhaar && (
+                <p className="text-sm text-red-600 font-medium bg-red-50 p-2 rounded-md border border-red-200">
+                  {errors.aadhaar}
+                </p>
               )}
-            </button>
+            </div>
 
-            <button
-              type="button"
-              onClick={onSkip}
-              disabled={loading}
-              className="w-full bg-white text-black py-4 px-6 rounded-lg font-semibold border-2 border-gray-300 hover:border-orange-500 hover:text-orange-600 focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
-            >
-              Skip for Now →
-            </button>
+            <div className="space-y-3 pt-2">
+              <Button
+                type="submit"
+                disabled={loading}
+                className="w-full h-12 bg-gradient-to-r from-orange-600 to-orange-700 hover:from-orange-700 hover:to-orange-800 text-white font-semibold text-base rounded-lg shadow-lg hover:shadow-xl transition-all duration-200"
+              >
+                {loading ? (
+                  <div className="flex items-center justify-center gap-2">
+                    <Loader2 className="w-5 h-5 animate-spin" />
+                    Sending OTP...
+                  </div>
+                ) : (
+                  <div className="flex items-center justify-center gap-2">
+                    <Shield className="w-5 h-5" />
+                    Send Aadhaar OTP
+                  </div>
+                )}
+              </Button>
+
+              <Button
+                type="button"
+                variant="outline"
+                onClick={onSkip}
+                disabled={loading}
+                className="w-full h-12 border-2 border-green-200 text-green-700 hover:bg-green-50 hover:border-green-300 font-semibold rounded-lg transition-all duration-200"
+              >
+                <span>Skip for Now</span>
+                <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
+              </Button>
+            </div>
+          </form>
+
+          <div className="pt-4 border-t border-gray-100 space-y-3">
+            <div className="flex items-center justify-center gap-2 text-sm text-gray-600 bg-blue-50 p-3 rounded-lg">
+              <Shield className="w-4 h-4 text-blue-600" />
+              <span>Your Aadhaar details are secure and encrypted</span>
+            </div>
+            
+            <div className="text-center">
+              <p className="text-xs text-gray-500 leading-relaxed">
+                This service is provided in accordance with the Aadhaar Act, 2016. 
+                Your data privacy is protected under Government of India guidelines.
+              </p>
+            </div>
           </div>
-        </form>
-
-        <div className="mt-8 text-center">
-          <p className="text-sm text-black">
-            🔒 Your Aadhaar details are secure and used only for verification
-          </p>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }

@@ -1,6 +1,10 @@
 'use client';
 
 import { Internship } from '../../types/internship';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { MapPin, Clock, Building, GraduationCap, ExternalLink, Eye } from 'lucide-react';
 
 interface InternshipCardProps {
   internship: Internship;
@@ -18,9 +22,9 @@ export default function InternshipCard({
   onViewDetails 
 }: InternshipCardProps) {
   const getMatchScoreColor = (score: number) => {
-    if (score >= 80) return 'bg-orange-100 text-orange-800';
-    if (score >= 60) return 'bg-orange-50 text-orange-700';
-    return 'bg-gray-100 text-gray-700';
+    if (score >= 80) return 'bg-green-100 border-green-300 text-green-800';
+    if (score >= 60) return 'bg-orange-100 border-orange-300 text-orange-800';
+    return 'bg-blue-100 border-blue-300 text-blue-800';
   };
 
   const formatDescription = (description: string) => {
@@ -30,136 +34,151 @@ export default function InternshipCard({
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-6 hover:shadow-xl transition-all duration-200 hover:border-orange-200">
-      {/* Header */}
-      <div className="flex justify-between items-start mb-4">
-        <div className="flex-1">
-          <h3 className="text-xl font-bold text-black mb-3">
-            {internship['area/field']} - {internship.sector}
-          </h3>
-          <div className="flex items-center space-x-4 text-sm text-black">
-            <span className="flex items-center font-medium">
-              📍 {internship.district}, {internship['state/ut']}
-            </span>
-            <span className="flex items-center font-medium">
-              ⏰ {internship.internship_type}
-            </span>
+    <Card className="hover:shadow-xl transition-all duration-300 border-0 shadow-lg bg-white/95 backdrop-blur-sm group hover:scale-[1.02]">
+      <CardHeader className="space-y-4">
+        <div className="flex justify-between items-start">
+          <div className="flex-1">
+            <CardTitle className="text-xl font-bold text-gray-900 mb-2 group-hover:text-blue-700 transition-colors">
+              {internship['area/field']}
+            </CardTitle>
+            <div className="flex items-center gap-2 text-sm text-gray-600 mb-3">
+              <Building className="w-4 h-4 text-blue-600" />
+              <span className="font-medium">{internship.sector}</span>
+            </div>
+            <div className="flex items-center gap-4 text-sm text-gray-600">
+              <div className="flex items-center gap-1">
+                <MapPin className="w-4 h-4 text-orange-600" />
+                <span>{internship.district}, {internship['state/ut']}</span>
+              </div>
+              <div className="flex items-center gap-1">
+                <Clock className="w-4 h-4 text-green-600" />
+                <span>{internship.internship_type}</span>
+              </div>
+            </div>
+          </div>
+          
+          {matchScore > 0 && (
+            <Badge className={`px-3 py-1 text-xs font-bold border ${getMatchScoreColor(matchScore)}`}>
+              {matchScore}% Match
+            </Badge>
+          )}
+        </div>
+      </CardHeader>
+
+      <CardContent className="space-y-6">
+        {/* Description */}
+        <p className="text-gray-700 text-sm leading-relaxed">
+          {formatDescription(internship.description)}
+        </p>
+
+        {/* Requirements and Skills Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="space-y-2">
+            <div className="flex items-center gap-2 text-sm font-semibold text-gray-800">
+              <GraduationCap className="w-4 h-4 text-blue-600" />
+              <span>Requirements</span>
+            </div>
+            <div className="space-y-2">
+              <Badge variant="outline" className="bg-blue-50 text-blue-800 border-blue-200">
+                {internship.minimum_qualification}
+              </Badge>
+              {internship.course && (
+                <Badge variant="outline" className="bg-blue-50 text-blue-800 border-blue-200 ml-2">
+                  {internship.course}
+                </Badge>
+              )}
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <h4 className="text-sm font-semibold text-gray-800">Skills Needed</h4>
+            <div className="flex flex-wrap gap-1">
+              {internship.preferred_skills.slice(0, 3).map((skill, index) => (
+                <Badge key={index} variant="outline" className="bg-green-50 text-green-800 border-green-200 text-xs">
+                  {skill}
+                </Badge>
+              ))}
+              {internship.preferred_skills.length > 3 && (
+                <span className="text-gray-500 text-xs self-center">
+                  +{internship.preferred_skills.length - 3} more
+                </span>
+              )}
+            </div>
           </div>
         </div>
-        
-        {matchScore > 0 && (
-          <div className={`px-3 py-1 rounded-full text-xs font-medium ${getMatchScoreColor(matchScore)}`}>
-            {matchScore}% Match
+
+        {/* Match Reasons */}
+        {matchReasons.length > 0 && (
+          <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+            <h4 className="text-sm font-semibold text-green-800 mb-2">Why this matches you</h4>
+            <ul className="space-y-1">
+              {matchReasons.slice(0, 2).map((reason, index) => (
+                <li key={index} className="text-sm text-green-700 flex items-center">
+                  <span className="w-1.5 h-1.5 bg-green-500 rounded-full mr-2"></span>
+                  {reason}
+                </li>
+              ))}
+            </ul>
           </div>
         )}
-      </div>
 
-      {/* Description */}
-      <p className="text-black text-base mb-6 leading-relaxed font-medium">
-        {formatDescription(internship.description)}
-      </p>
-
-      {/* Requirements */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-        <div>
-          <h4 className="text-sm font-bold text-black mb-3">📚 Requirements</h4>
-          <div className="space-y-2">
-            <span className="inline-block bg-orange-50 text-orange-700 px-3 py-2 rounded-lg text-sm font-medium">
-              {internship.minimum_qualification}
-            </span>
-            {internship.course && (
-              <span className="inline-block bg-orange-50 text-orange-700 px-3 py-2 rounded-lg text-sm font-medium ml-2">
-                {internship.course}
-              </span>
+        {/* Certifications and Special Requirements */}
+        {(internship.certification_name.length > 0 || internship.special_requirements.length > 0) && (
+          <div className="space-y-3">
+            {internship.certification_name.length > 0 && (
+              <div>
+                <h4 className="text-sm font-semibold text-gray-800 mb-2">Preferred Certifications</h4>
+                <div className="flex flex-wrap gap-1">
+                  {internship.certification_name.map((cert, index) => (
+                    <Badge key={index} variant="outline" className="bg-orange-50 text-orange-800 border-orange-200 text-xs">
+                      {cert}
+                    </Badge>
+                  ))}
+                </div>
+              </div>
+            )}
+            
+            {internship.special_requirements.length > 0 && (
+              <div>
+                <h4 className="text-sm font-semibold text-gray-800 mb-2">Special Requirements</h4>
+                <div className="flex flex-wrap gap-1">
+                  {internship.special_requirements.map((req, index) => (
+                    <Badge key={index} variant="outline" className="bg-red-50 text-red-800 border-red-200 text-xs">
+                      {req}
+                    </Badge>
+                  ))}
+                </div>
+              </div>
             )}
           </div>
+        )}
+
+        {/* Opportunities */}
+        <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+          <span className="text-sm text-gray-700 font-medium">
+            {internship.no_of_opportunities} opportunities available
+          </span>
         </div>
 
-        <div>
-          <h4 className="text-sm font-bold text-black mb-3">🎯 Skills Needed</h4>
-          <div className="flex flex-wrap gap-2">
-            {internship.preferred_skills.slice(0, 3).map((skill, index) => (
-              <span key={index} className="bg-green-50 text-green-700 px-2 py-1 rounded text-xs">
-                {skill}
-              </span>
-            ))}
-            {internship.preferred_skills.length > 3 && (
-              <span className="text-gray-500 text-xs">
-                +{internship.preferred_skills.length - 3} more
-              </span>
-            )}
-          </div>
+        {/* Actions */}
+        <div className="flex gap-3 pt-2">
+          <Button
+            variant="outline"
+            onClick={() => onViewDetails?.(internship.id || '')}
+            className="flex-1 border-2 border-blue-200 text-blue-700 hover:bg-blue-50 hover:border-blue-300 font-semibold transition-all duration-200"
+          >
+            <Eye className="w-4 h-4 mr-2" />
+            View Details
+          </Button>
+          <Button
+            onClick={() => onApply?.(internship.id || '')}
+            className="flex-1 bg-gradient-to-r from-orange-600 to-orange-700 hover:from-orange-700 hover:to-orange-800 text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-200"
+          >
+            <ExternalLink className="w-4 h-4 mr-2" />
+            Apply Now
+          </Button>
         </div>
-      </div>
-
-      {/* Match Reasons */}
-      {matchReasons.length > 0 && (
-        <div className="mb-4">
-          <h4 className="text-sm font-medium text-gray-900 mb-2">✨ Why this matches you</h4>
-          <ul className="space-y-1">
-            {matchReasons.slice(0, 2).map((reason, index) => (
-              <li key={index} className="text-sm text-black flex items-center font-medium">
-                <span className="w-2 h-2 bg-orange-500 rounded-full mr-3"></span>
-                {reason}
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-
-      {/* Certifications and Special Requirements */}
-      {(internship.certification_name.length > 0 || internship.special_requirements.length > 0) && (
-        <div className="mb-6">
-          {internship.certification_name.length > 0 && (
-            <div className="mb-3">
-              <h4 className="text-sm font-bold text-black mb-2">📜 Preferred Certifications</h4>
-              <div className="flex flex-wrap gap-2">
-                {internship.certification_name.map((cert, index) => (
-                  <span key={index} className="bg-blue-50 text-blue-700 px-2 py-1 rounded text-xs">
-                    {cert}
-                  </span>
-                ))}
-              </div>
-            </div>
-          )}
-          
-          {internship.special_requirements.length > 0 && (
-            <div>
-              <h4 className="text-sm font-bold text-black mb-2">⚠️ Special Requirements</h4>
-              <div className="flex flex-wrap gap-2">
-                {internship.special_requirements.map((req, index) => (
-                  <span key={index} className="bg-red-50 text-red-700 px-2 py-1 rounded text-xs">
-                    {req}
-                  </span>
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
-      )}
-
-      {/* Opportunities */}
-      <div className="flex items-center justify-between mb-6">
-        <span className="text-sm text-black font-semibold">
-          🎪 {internship.no_of_opportunities} opportunities available
-        </span>
-      </div>
-
-      {/* Actions */}
-      <div className="flex space-x-3">
-        <button
-          onClick={() => onViewDetails?.(internship.id || '')}
-          className="flex-1 bg-white text-black border-2 border-gray-300 py-3 px-4 rounded-lg font-semibold hover:border-orange-500 hover:text-orange-600 transition-all duration-200"
-        >
-          View Details
-        </button>
-        <button
-          onClick={() => onApply?.(internship.id || '')}
-          className="flex-1 bg-orange-600 text-white py-3 px-4 rounded-lg font-semibold hover:bg-orange-700 transition-all duration-200 shadow-lg hover:shadow-xl"
-        >
-          Apply Now
-        </button>
-      </div>
-    </div>
+      </CardContent>
+    </Card>
   );
 }

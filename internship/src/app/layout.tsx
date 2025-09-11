@@ -14,8 +14,12 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "PM Internship Portal - Find Your Perfect Internship",
-  description: "AI-powered internship recommendations for students across India. Simple, mobile-friendly, and designed for first-generation learners.",
+  title: "PM Internship Portal - Government of India",
+  description: "Official internship portal for students across India. AI-powered recommendations, secure authentication, and verified opportunities.",
+  keywords: "PM Internship, Government of India, Student Internships, Career Development, Skill Development",
+  authors: [{ name: "Government of India" }],
+  viewport: "width=device-width, initial-scale=1",
+  robots: "index, follow",
 };
 
 export default function RootLayout({

@@ -3,6 +3,68 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* Indian Government Theme Colors */
+:root {
+  --india-orange: #FF9933;
+  --india-white: #FFFFFF;
+  --india-green: #138808;
+  --india-blue: #000080;
+  --india-saffron: #FF9933;
+  --ashoka-blue: #000080;
+  --ashoka-green: #138808;
+}
+
+/* Government of India styling patterns */
+.gov-gradient {
+  background: linear-gradient(135deg, var(--india-orange) 0%, var(--india-blue) 50%, var(--india-green) 100%);
+}
+
+.gov-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 153, 51, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 128, 0.1);
+}
+
+.gov-button-primary {
+  background: linear-gradient(135deg, var(--india-orange), #ff7700);
+  color: white;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.gov-button-primary:hover {
+  background: linear-gradient(135deg, #ff7700, var(--india-orange));
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 153, 51, 0.3);
+}
+
+.gov-button-secondary {
+  background: linear-gradient(135deg, var(--india-green), #0f7a0f);
+  color: white;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.gov-button-secondary:hover {
+  background: linear-gradient(135deg, #0f7a0f, var(--india-green));
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(19, 136, 8, 0.3);
+}
+
+.gov-button-outline {
+  background: transparent;
+  border: 2px solid var(--india-blue);
+  color: var(--india-blue);
+  transition: all 0.3s ease;
+}
+
+.gov-button-outline:hover {
+  background: var(--india-blue);
+  color: white;
+  transform: translateY(-2px);
+}
+
 /* Custom animations for better UX */
 @keyframes fadeIn {
   from {
@@ -35,6 +97,12 @@
   }
 }
 
+@keyframes tricolor-wave {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
 .animate-fade-in {
   animation: fadeIn 0.5s ease-out forwards;
 }
@@ -45,6 +113,12 @@
 
 .animate-pulse-soft {
   animation: pulse 2s ease-in-out infinite;
+}
+
+.animate-tricolor {
+  background: linear-gradient(-45deg, var(--india-orange), var(--india-white), var(--india-green), var(--india-blue));
+  background-size: 400% 400%;
+  animation: tricolor-wave 8s ease-in-out infinite;
 }
 
 /* Mobile-first responsive design */

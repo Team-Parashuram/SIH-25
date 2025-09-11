@@ -2,6 +2,10 @@
 
 import { useState, useEffect } from 'react';
 import { OTPVerificationData } from '../../types/auth';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Smartphone, ArrowLeft, Shield, RefreshCw, Loader2, Info } from 'lucide-react';
 
 interface OTPVerificationProps {
   phoneNumber: string;
@@ -130,94 +134,122 @@ export default function OTPVerification({
   };
 
   return (
-    <div className="min-h-screen bg-white flex items-center justify-center p-4">
-      <div className="bg-white rounded-xl shadow-2xl border border-gray-200 p-8 w-full max-w-md">
-        <div className="text-center mb-8">
-          <div className="mx-auto mb-4 h-16 w-16 bg-orange-100 rounded-full flex items-center justify-center">
-            <span className="text-2xl">📱</span>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-orange-50 to-green-50 flex items-center justify-center p-4">
+      <Card className="w-full max-w-md shadow-xl border-0 bg-white/95 backdrop-blur-sm">
+        <CardHeader className="text-center space-y-4 pb-6">
+          <div className="mx-auto w-16 h-16 bg-gradient-to-br from-blue-600 to-blue-700 rounded-full flex items-center justify-center shadow-lg">
+            <Smartphone className="w-8 h-8 text-white" />
           </div>
-          <h1 className="text-3xl font-bold text-black mb-2">Verify OTP</h1>
-          <p className="text-black text-base">
-            Enter the 6-digit OTP sent to<br />
-            <span className="font-semibold text-orange-600">+91 {phoneNumber}</span>
-          </p>
-          <div className="mt-3 p-3 bg-orange-50 rounded-lg border border-orange-200">
-            <p className="text-sm text-orange-800 font-medium">
-              💡 For demo: Use <span className="font-bold">123456</span> or any 6-digit number
-            </p>
-          </div>
-        </div>
-
-        <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label className="block text-sm font-semibold text-black mb-4 text-center">
-              Enter OTP
-            </label>
-            <div className="flex justify-center space-x-3">
-              {otp.map((digit, index) => (
-                <input
-                  key={index}
-                  id={`otp-${index}`}
-                  type="text"
-                  value={digit}
-                  onChange={(e) => handleOtpChange(index, e.target.value)}
-                  onKeyDown={(e) => handleKeyDown(index, e)}
-                  className={`w-14 h-14 text-center text-xl font-bold border-2 rounded-lg bg-white text-black focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors ${
-                    errors.otp ? 'border-red-500' : 'border-gray-300 hover:border-orange-300'
-                  }`}
-                  maxLength={1}
-                  disabled={loading}
-                />
-              ))}
+            <CardTitle className="text-2xl font-bold text-gray-900 mb-2">
+              Verify OTP
+            </CardTitle>
+            <p className="text-gray-600 text-sm leading-relaxed mb-3">
+              Enter the 6-digit OTP sent to
+              <br />
+              <span className="font-semibold text-orange-600">+91 {phoneNumber}</span>
+            </p>
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
+              <div className="flex items-start gap-2">
+                <Info className="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0" />
+                <p className="text-sm text-blue-800 font-medium">
+                  Demo Mode: Use <span className="font-bold">123456</span> or any 6-digit number
+                </p>
+              </div>
             </div>
-            {errors.otp && (
-              <p className="mt-3 text-sm text-red-600 text-center font-medium">{errors.otp}</p>
-            )}
           </div>
+        </CardHeader>
 
-          <div className="text-center">
-            {canResend ? (
-              <button
-                type="button"
-                onClick={handleResend}
-                className="text-orange-600 hover:text-orange-700 font-semibold text-sm border border-orange-200 px-4 py-2 rounded-lg hover:border-orange-500 transition-colors"
-              >
-                Resend OTP
-              </button>
-            ) : (
-              <p className="text-black text-sm">
-                Resend OTP in <span className="font-semibold text-orange-600">{timer}s</span>
-              </p>
-            )}
-          </div>
-
-          <div className="space-y-3">
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full bg-orange-600 text-white py-4 px-6 rounded-lg font-semibold text-lg hover:bg-orange-700 focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-lg hover:shadow-xl"
-            >
-              {loading ? (
-                <div className="flex items-center justify-center">
-                  <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white mr-3"></div>
-                  Verifying...
-                </div>
-              ) : (
-                'Verify OTP'
+        <CardContent className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="space-y-3">
+              <label className="block text-sm font-semibold text-gray-800 text-center">
+                Enter 6-Digit OTP
+              </label>
+              <div className="flex justify-center gap-2">
+                {otp.map((digit, index) => (
+                  <Input
+                    key={index}
+                    id={`otp-${index}`}
+                    type="text"
+                    value={digit}
+                    onChange={(e) => handleOtpChange(index, e.target.value)}
+                    onKeyDown={(e) => handleKeyDown(index, e)}
+                    className={`w-12 h-12 text-center text-lg font-bold border-2 rounded-lg transition-colors ${
+                      errors.otp 
+                        ? 'border-red-500 focus:border-red-500 focus:ring-red-200' 
+                        : 'border-blue-200 focus:border-orange-500 focus:ring-orange-100 hover:border-blue-300'
+                    }`}
+                    maxLength={1}
+                    disabled={loading}
+                  />
+                ))}
+              </div>
+              {errors.otp && (
+                <p className="text-sm text-red-600 text-center font-medium bg-red-50 p-2 rounded-md border border-red-200">
+                  {errors.otp}
+                </p>
               )}
-            </button>
+            </div>
 
-            <button
-              type="button"
-              onClick={onBack}
-              disabled={loading}
-              className="w-full bg-white text-black py-4 px-6 rounded-lg font-semibold border-2 border-gray-300 hover:border-orange-500 hover:text-orange-600 focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
-            >
-              ← Change Phone Number
-            </button>
+            <div className="text-center">
+              {canResend ? (
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={handleResend}
+                  className="border-2 border-orange-200 text-orange-700 hover:bg-orange-50 hover:border-orange-300 font-semibold rounded-lg transition-all duration-200"
+                >
+                  <RefreshCw className="w-4 h-4 mr-2" />
+                  Resend OTP
+                </Button>
+              ) : (
+                <p className="text-gray-600 text-sm bg-gray-50 p-2 rounded-md">
+                  Resend OTP in <span className="font-semibold text-orange-600">{timer}s</span>
+                </p>
+              )}
+            </div>
+
+            <div className="space-y-3 pt-2">
+              <Button
+                type="submit"
+                disabled={loading}
+                className="w-full h-12 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-semibold text-base rounded-lg shadow-lg hover:shadow-xl transition-all duration-200"
+              >
+                {loading ? (
+                  <div className="flex items-center justify-center gap-2">
+                    <Loader2 className="w-5 h-5 animate-spin" />
+                    Verifying OTP...
+                  </div>
+                ) : (
+                  <div className="flex items-center justify-center gap-2">
+                    <Shield className="w-5 h-5" />
+                    Verify OTP
+                  </div>
+                )}
+              </Button>
+
+              <Button
+                type="button"
+                variant="outline"
+                onClick={onBack}
+                disabled={loading}
+                className="w-full h-12 border-2 border-blue-200 text-blue-700 hover:bg-blue-50 hover:border-blue-300 font-semibold rounded-lg transition-all duration-200"
+              >
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Change Phone Number
+              </Button>
+            </div>
+          </form>
+
+          <div className="pt-4 border-t border-gray-100">
+            <div className="flex items-center justify-center gap-2 text-sm text-gray-600 bg-blue-50 p-3 rounded-lg">
+              <Shield className="w-4 h-4 text-blue-600" />
+              <span>Secure OTP verification via SMS</span>
+            </div>
           </div>
-        </form>
-      </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }
