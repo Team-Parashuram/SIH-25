@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { AadhaarAuthData } from '../../types/auth';
 
 interface AadhaarAuthProps {
-  onSubmit: (data: AadhaarAuthData) => void;
+  onSubmit: (data: AadhaarAuthData) => Promise<void>;
   onSkip: () => void;
   loading?: boolean;
 }

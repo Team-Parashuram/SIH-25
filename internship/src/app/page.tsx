@@ -10,6 +10,7 @@ import ProfileForm from '../components/profile/ProfileForm';
 import RecommendationList from '../components/recommendations/RecommendationList';
 import { ProfileFormData } from '../types/profile';
 import { InternshipRecommendation } from '../types/internship';
+import { AadhaarAuthData } from '../types/auth';
 import { RecommendationService } from '../services/recommendations';
 import { useRouter } from 'next/navigation';
 
@@ -149,7 +150,7 @@ export default function Home() {
     }
   };
 
-  const handleAadhaarVerification = async (data: { aadhaarNumber: string; phoneNumber: string; aadhaarOtp: string; phoneOtp: string }) => {
+  const handleAadhaarVerification = async (data: AadhaarAuthData) => {
     try {
       setAuthLoading(true);
       console.log('Aadhaar verification started with:', data);
@@ -157,14 +158,8 @@ export default function Home() {
       // Skip all validation for demo purposes - accept any OTP
       console.log('Demo mode: accepting any OTP input');
       
-      // Map the fields to match what verifyAadhaar expects
-      const aadhaarData = {
-        aadhaarNumber: data.aadhaarNumber,
-        otp: data.aadhaarOtp || '123456' // Use provided OTP or fallback
-      };
-      
-      console.log('Calling verifyAadhaar with:', aadhaarData);
-      await verifyAadhaar(aadhaarData);
+      console.log('Calling verifyAadhaar with:', data);
+      await verifyAadhaar(data);
       console.log('Aadhaar verification successful');
       setCurrentStep('profile');
     } catch (error) {
