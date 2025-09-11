@@ -44,14 +44,13 @@ export class DualCodingService {
         logger.info(`Translating NAMASTE code ${request.code} from ${request.system}`);
 
         try {
-            // Get NAMASTE code details
             const namasteCode = await databaseService.getCodeBySystemAndCode(request.system, request.code);
             
             if (!namasteCode) {
                 throw new Error(`NAMASTE code ${request.code} not found in ${request.system} system`);
             }
 
-            // For now, using mock mappings - in production, this would use a comprehensive mapping database
+            // For now, using mock mappings 
             const mockMappings = this.getMockMappings();
             logger.info(`Available mock mappings: ${JSON.stringify(mockMappings.map(m => ({ code: m.namasteCode, system: m.namasteSystem })))}`);
             
