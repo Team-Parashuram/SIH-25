@@ -87,11 +87,11 @@ export default function RecommendationList({
       </div>
 
       {/* Recommendations Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
         {displayedRecommendations.map((recommendation, index) => (
           <div
             key={recommendation.internship.id}
-            className="opacity-0 animate-fade-in"
+            className="opacity-0 animate-fade-in h-full"
             style={{
               animationDelay: `${index * 200}ms`,
               animationFillMode: 'forwards'
