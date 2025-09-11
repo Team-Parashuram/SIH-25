@@ -34,7 +34,6 @@ export default function AadhaarAuth({ onSubmit, onSkip, loading = false }: Aadha
     
     if (Object.keys(newErrors).length === 0) {
       setStep('otp');
-      // Simulate sending OTP
     }
   };
 
