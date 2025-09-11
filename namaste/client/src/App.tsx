@@ -1,8 +1,8 @@
-import NamasteFhirDemo from './components/NamasteFhirDemo'
+import NamasteFhir from './components/NamasteFhir'
 
 function App() {
   return (
-    <NamasteFhirDemo />
+    <NamasteFhir />
   )
 }
 

@@ -1,5 +1,5 @@
 
-export { default as NamasteFhirDemo } from './NamasteFhirDemo';
+export { default as NamasteFhirDemo } from './NamasteFhir';
 
 
 export { default as ApiStatusSection } from './ApiStatusSection';
@@ -10,7 +10,7 @@ export { default as ConditionSection } from './ConditionSection';
 export { default as EndpointsSection } from './EndpointsSection';
 
 
-export { default as DemoHeader } from './DemoHeader';
+export { default as DemoHeader } from './Navbar';
 export { default as DemoFooter } from './Footer';
 export { default as ResultDisplay } from './ResultDisplay';
 

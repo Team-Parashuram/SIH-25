@@ -2,11 +2,11 @@ import React from 'react';
 import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 
-interface HeaderProps {
+interface NavbarProps {
     onLoadSampleData: () => void;
     }
 
-    const Header: React.FC<HeaderProps> = ({ onLoadSampleData }) => {
+    const Navbar: React.FC<NavbarProps> = ({ onLoadSampleData }) => {
     return (
         <div className="mb-8">
         {/* Government Header */}
@@ -52,4 +52,4 @@ interface HeaderProps {
     );
 };
 
-export default Header;
+export default Navbar;

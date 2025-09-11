@@ -53,9 +53,13 @@ export class DualCodingService {
 
             // For now, using mock mappings - in production, this would use a comprehensive mapping database
             const mockMappings = this.getMockMappings();
+            logger.info(`Available mock mappings: ${JSON.stringify(mockMappings.map(m => ({ code: m.namasteCode, system: m.namasteSystem })))}`);
+            
             const mapping = mockMappings.find(m => 
                 m.namasteCode === request.code && m.namasteSystem === request.system
             );
+            
+            logger.info(`Looking for mapping: code=${request.code}, system=${request.system}, found=${!!mapping}`);
 
             const result: TranslationResult = {
                 sourceCode: {
@@ -165,46 +169,64 @@ export class DualCodingService {
     }
 
     /**
-     * Mock mappings for demonstration
+     * Mock mappings for demonstration with more accurate semantic matching
      * In production, this would be loaded from a comprehensive mapping database
      */
     private static getMockMappings() {
         return [
             {
-                namasteCode: 'A001',
+                namasteCode: 'EC-3.9.1',
                 namasteSystem: 'ayurveda' as const,
-                namasteDisplay: 'Jvara',
-                icd11TM2Code: '5A00',
-                icd11TM2Display: 'Jvara (Traditional Medicine)',
-                icd11BiomedicineCode: 'MD11',
+                namasteDisplay: 'ABighAtajajvaraH',
+                icd11TM2Code: 'XM1G51',
+                icd11TM2Display: 'Jvara (Fever in Traditional Medicine)',
+                icd11BiomedicineCode: 'MG30',
                 icd11BiomedicineDisplay: 'Fever, unspecified'
             },
             {
-                namasteCode: 'A002',
+                namasteCode: 'AAE-4',
                 namasteSystem: 'ayurveda' as const,
-                namasteDisplay: 'Kasa',
-                icd11TM2Code: '5A10',
-                icd11TM2Display: 'Kasa (Traditional Medicine)',
-                icd11BiomedicineCode: 'MD12',
-                icd11BiomedicineDisplay: 'Cough'
+                namasteDisplay: 'AmASayagatavAtaH',
+                icd11TM2Code: 'XM7G42',
+                icd11TM2Display: 'Amasaya Vata (Stomach disorders in Traditional Medicine)',
+                icd11BiomedicineCode: 'DA90',
+                icd11BiomedicineDisplay: 'Functional dyspepsia'
             },
             {
-                namasteCode: 'S001',
+                namasteCode: 'LAC1.3',
                 namasteSystem: 'siddha' as const,
-                namasteDisplay: 'Kaaithu Noi',
-                icd11TM2Code: '5S00',
-                icd11TM2Display: 'Kaaithu Noi (Siddha)',
-                icd11BiomedicineCode: 'MD20',
-                icd11BiomedicineDisplay: 'Respiratory disease, unspecified'
+                namasteDisplay: 'Aiya Aẕal Kurutiyaẕal Nōy',
+                icd11TM2Code: 'XM5S33',
+                icd11TM2Display: 'Aiya Azal (Blood and circulation disorders in Siddha)',
+                icd11BiomedicineCode: 'BA00',
+                icd11BiomedicineDisplay: 'Circulatory system disorders'
             },
             {
-                namasteCode: 'U001',
+                namasteCode: 'P-7',
                 namasteSystem: 'unani' as const,
-                namasteDisplay: 'Bukhar',
-                icd11TM2Code: '5U00',
-                icd11TM2Display: 'Bukhar (Unani)',
-                icd11BiomedicineCode: 'MD11',
+                namasteDisplay: 'Amrāḍ Mudiya',
+                icd11TM2Code: 'XM3U15',
+                icd11TM2Display: 'Bukhar (Fever conditions in Unani)',
+                icd11BiomedicineCode: 'MG30',
                 icd11BiomedicineDisplay: 'Fever, unspecified'
+            },
+            {
+                namasteCode: 'AB-1.1',
+                namasteSystem: 'ayurveda' as const,
+                namasteDisplay: 'AnnavAhastrotogatavAtaH',
+                icd11TM2Code: 'XM8A21',
+                icd11TM2Display: 'Annavaha Srotasa Vata (Digestive tract disorders)',
+                icd11BiomedicineCode: 'DA92',
+                icd11BiomedicineDisplay: 'Digestive disorders, unspecified'
+            },
+            {
+                namasteCode: 'SYS-2.4',
+                namasteSystem: 'siddha' as const,
+                namasteDisplay: 'Kapala Nōy',
+                icd11TM2Code: 'XM6S44',
+                icd11TM2Display: 'Kapala Noy (Head disorders in Siddha)',
+                icd11BiomedicineCode: '8A80',
+                icd11BiomedicineDisplay: 'Headache'
             }
         ];
     }
