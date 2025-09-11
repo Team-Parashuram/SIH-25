@@ -1,8 +1,8 @@
-import NamasteFhir from './components/NamasteFhir'
+import MainApplication from './pages/MainApplication'
 
 function App() {
   return (
-    <NamasteFhir />
+    <MainApplication />
   )
 }
 
