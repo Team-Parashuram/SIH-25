@@ -59,7 +59,7 @@ interface ConditionSectionProps {
                         id="condition-code"
                         value={conditionCode}
                         onChange={(e) => setConditionCode(e.target.value)}
-                        placeholder="A001"
+                        placeholder="AAE-4"
                         className="w-full border-2 border-gray-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-200 rounded-md px-4 py-3"
                     />
                 </div>

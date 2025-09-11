@@ -55,7 +55,7 @@ interface TranslationSectionProps {
                         id="translate-code"
                         value={translateCode}
                         onChange={(e) => setTranslateCode(e.target.value)}
-                        placeholder="Enter NAMASTE code (e.g., A001)"
+                        placeholder="Enter NAMASTE code (e.g., AAE-4)"
                         className="w-full border-2 border-gray-300 focus:border-purple-500 focus:ring-2 focus:ring-purple-200 rounded-md px-4 py-3"
                     />
                 </div>

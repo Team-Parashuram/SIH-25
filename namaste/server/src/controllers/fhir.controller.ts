@@ -5,6 +5,7 @@ import { DualCodingService, TranslationRequest } from '../services/dual-coding.s
 import { ApiResponse } from '../utils/response.util.js';
 import { NAMASTEService } from '../services/namaste.service.js';
 import logger from '../utils/logger.js';
+import { databaseService } from '../database/service.js';
 
 /**
  * FHIR Controller
@@ -25,8 +26,6 @@ export class FHIRController {
             }
 
             const codeSystem = await FHIRCodeSystemGenerator.generateNAMASTECodeSystem(system as 'ayurveda' | 'siddha' | 'unani');
-            
-            // Set FHIR content type
             res.setHeader('Content-Type', 'application/fhir+json; fhirVersion=4.0');
             return res.status(200).json(codeSystem);
 
@@ -149,16 +148,13 @@ export class FHIRController {
                 return ApiResponse.validationError(res, 'Invalid system. Must be one of: ayurveda, siddha, unani');
             }
 
-            // Get NAMASTE code details
             const namasteCodeDetails = await databaseService.getCodeBySystemAndCode(system, namasteCode);
             if (!namasteCodeDetails) {
                 return ApiResponse.notFound(res, `NAMASTE code ${namasteCode} not found in ${system} system`);
             }
 
-            // Translate to ICD-11
             const translation = await DualCodingService.translateNAMASTEToICD11({ code: namasteCode, system });
 
-            // Generate dual-coded condition
             const condition = FHIRCodeSystemGenerator.generateDualCodedCondition(
                 namasteCode,
                 namasteCodeDetails.display,
@@ -186,9 +182,6 @@ export class FHIRController {
     async getCondition(req: Request, res: Response) {
         try {
             const { id } = req.params;
-            
-            // In a real implementation, this would fetch from database
-            // For demo purposes, return a sample condition
             const sampleCondition: Condition = {
                 resourceType: 'Condition',
                 id: id,
@@ -239,9 +232,7 @@ export class FHIRController {
                 return ApiResponse.validationError(res, 'Valid FHIR Bundle required');
             }
 
-            // Process each entry in the bundle
             const processedEntries = bundle.entry?.map(entry => {
-                // Add processing timestamp
                 if (entry.resource) {
                     entry.resource.meta = {
                         ...entry.resource.meta,
@@ -284,8 +275,7 @@ export class FHIRController {
     async getBundle(req: Request, res: Response) {
         try {
             const { id } = req.params;
-            
-            // Sample bundle for demo
+
             const sampleBundle: Bundle = {
                 resourceType: 'Bundle',
                 id: id,
@@ -432,5 +422,3 @@ export class FHIRController {
 
 export const fhirController = new FHIRController();
 
-// Fix the import issue by importing required services
-import { databaseService } from '../database/service.js';
