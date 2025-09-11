@@ -32,9 +32,7 @@ import {
     LineChart as RechartsLineChart,
     Line,
     Area,
-    AreaChart,
-    RadialBarChart,
-    RadialBar
+    AreaChart
 } from 'recharts';
 
     interface SystemStatus {
@@ -47,7 +45,6 @@ import {
     const Dashboard: React.FC = () => {
     const { stats, loading, error, refreshStats } = useSystemStats();
 
-    // Chart data
     const systemCodesData = [
         { name: 'Ayurveda', codes: 2145, color: '#10B981' },
         { name: 'Siddha', codes: 1234, color: '#3B82F6' },
@@ -83,7 +80,7 @@ import {
         { name: 'Storage Usage', value: 45, fill: '#10B981' }
     ];
 
-    const COLORS = ['#10B981', '#3B82F6', '#8B5CF6', '#F59E0B', '#EF4444'];
+    // const COLORS = ['#10B981', '#3B82F6', '#8B5CF6', '#F59E0B', '#EF4444'];
 
     const [systemStatus] = useState<SystemStatus[]>([
         {
