@@ -3,18 +3,6 @@
 import { useState, useEffect } from 'react';
 import { InternshipRecommendation } from '../../types/internship';
 import InternshipCard from './InternshipCard';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { 
-  Search, 
-  RefreshCw, 
-  Loader2, 
-  Target, 
-  TrendingUp,
-  Award,
-  Users
-} from 'lucide-react';
 
 interface RecommendationListProps {
   recommendations: InternshipRecommendation[];
@@ -34,195 +22,198 @@ export default function RecommendationList({
   const [displayedRecommendations, setDisplayedRecommendations] = useState<InternshipRecommendation[]>([]);
 
   useEffect(() => {
-    // Simulate loading animation by showing recommendations one by one
     if (recommendations.length > 0 && !loading) {
       setDisplayedRecommendations([]);
       recommendations.forEach((recommendation, index) => {
         setTimeout(() => {
           setDisplayedRecommendations(prev => [...prev, recommendation]);
-        }, index * 200);
+        }, index * 150);
       });
     }
   }, [recommendations, loading]);
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-orange-50 to-green-50 p-4">
-        <Card className="max-w-md mx-auto shadow-xl border-0 bg-white/95 backdrop-blur-sm">
-          <CardContent className="text-center py-12">
-            <div className="mx-auto mb-6 w-16 h-16 bg-gradient-to-br from-orange-500 to-orange-600 rounded-full flex items-center justify-center">
-              <Loader2 className="w-8 h-8 text-white animate-spin" />
+      <div className="max-w-4xl mx-auto">
+        <div className="bg-white border border-gray-200 rounded-lg shadow-sm p-8 text-center">
+          <div className="mx-auto mb-4 w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+            <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600"></div>
+          </div>
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">
+            Finding Perfect Internships
+          </h3>
+          <p className="text-gray-600 text-sm">
+            Analyzing your profile and matching with opportunities...
+          </p>
+          <div className="mt-4 bg-blue-50 border border-blue-200 rounded-md p-3">
+            <div className="flex items-center justify-center gap-2 text-sm text-blue-800">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span>AI-powered matching in progress</span>
             </div>
-            <CardTitle className="text-xl font-bold text-gray-900 mb-2">
-              Finding Perfect Internships
-            </CardTitle>
-            <p className="text-gray-600">
-              Analyzing your profile and matching with opportunities...
-            </p>
-            <div className="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
-              <div className="flex items-center justify-center gap-2 text-sm text-blue-800">
-                <Target className="w-4 h-4" />
-                <span>AI-powered matching in progress</span>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
       </div>
     );
   }
 
   if (recommendations.length === 0) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-orange-50 to-green-50 p-4">
-        <Card className="max-w-md mx-auto shadow-xl border-0 bg-white/95 backdrop-blur-sm">
-          <CardContent className="text-center py-12">
-            <div className="mx-auto mb-6 w-16 h-16 bg-gradient-to-br from-blue-600 to-blue-700 rounded-full flex items-center justify-center">
-              <Search className="w-8 h-8 text-white" />
-            </div>
-            <CardTitle className="text-xl font-bold text-gray-900 mb-2">
-              No Recommendations Found
-            </CardTitle>
-            <p className="text-gray-600 mb-6">
-              We couldn&apos;t find any internships matching your profile. Try updating your skills or preferences.
-            </p>
-            <Button
-              onClick={onRefresh}
-              className="bg-gradient-to-r from-orange-600 to-orange-700 hover:from-orange-700 hover:to-orange-800 text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-200"
-            >
-              <RefreshCw className="w-4 h-4 mr-2" />
-              Refresh Recommendations
-            </Button>
-          </CardContent>
-        </Card>
+      <div className="max-w-4xl mx-auto">
+        <div className="bg-white border border-gray-200 rounded-lg shadow-sm p-8 text-center">
+          <div className="mx-auto mb-4 w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center">
+            <svg className="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+          </div>
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">
+            No Recommendations Found
+          </h3>
+          <p className="text-gray-600 mb-4 text-sm">
+            We couldn&apos;t find any internships matching your profile. Try updating your skills or preferences.
+          </p>
+          <button
+            onClick={onRefresh}
+            className="bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 py-2 rounded-md transition-colors duration-200 text-sm"
+          >
+            <svg className="w-4 h-4 mr-1.5 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+            </svg>
+            Refresh Recommendations
+          </button>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-orange-50 to-green-50 p-4">
-      <div className="max-w-7xl mx-auto space-y-6">
-        {/* Header */}
-        <Card className="shadow-xl border-0 bg-white/95 backdrop-blur-sm">
-          <CardHeader>
-            <div className="flex justify-between items-center">
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-gradient-to-br from-green-600 to-green-700 rounded-full flex items-center justify-center">
-                  <Target className="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <CardTitle className="text-2xl font-bold text-gray-900">
-                    Personalized Recommendations
-                  </CardTitle>
-                  <p className="text-gray-600 text-sm">
-                    {recommendations.length} AI-matched internships based on your profile
-                  </p>
-                </div>
-              </div>
-              
-              <div className="flex items-center gap-2">
-                <Badge className="bg-green-100 text-green-800 border-green-300">
-                  <TrendingUp className="w-3 h-3 mr-1" />
-                  {recommendations.length} matches
-                </Badge>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={onRefresh}
-                  className="border-2 border-blue-200 text-blue-700 hover:bg-blue-50"
-                >
-                  <RefreshCw className="w-4 h-4" />
-                </Button>
-              </div>
+    <div className="max-w-6xl mx-auto space-y-6">
+      {/* Header Section */}
+      <div className="bg-white border border-gray-200 rounded-lg shadow-sm p-6">
+        <div className="flex justify-between items-center">
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center">
+              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
             </div>
-          </CardHeader>
-        </Card>
-
-        {/* Statistics */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <Card className="text-center shadow-lg border-0 bg-white/95">
-            <CardContent className="p-4">
-              <div className="flex items-center justify-center gap-2 text-orange-600 mb-2">
-                <Award className="w-5 h-5" />
-                <span className="text-lg font-bold">{recommendations.filter(r => r.matchScore >= 80).length}</span>
-              </div>
-              <p className="text-sm text-gray-600">High Match (80%+)</p>
-            </CardContent>
-          </Card>
-          
-          <Card className="text-center shadow-lg border-0 bg-white/95">
-            <CardContent className="p-4">
-              <div className="flex items-center justify-center gap-2 text-blue-600 mb-2">
-                <Users className="w-5 h-5" />
-                <span className="text-lg font-bold">{recommendations.reduce((sum, r) => sum + r.internship.no_of_opportunities, 0)}</span>
-              </div>
-              <p className="text-sm text-gray-600">Total Positions</p>
-            </CardContent>
-          </Card>
-          
-          <Card className="text-center shadow-lg border-0 bg-white/95">
-            <CardContent className="p-4">
-              <div className="flex items-center justify-center gap-2 text-green-600 mb-2">
-                <TrendingUp className="w-5 h-5" />
-                <span className="text-lg font-bold">{Math.round(recommendations.reduce((sum, r) => sum + r.matchScore, 0) / recommendations.length)}%</span>
-              </div>
-              <p className="text-sm text-gray-600">Avg Match Score</p>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Recommendations Grid */}
-        <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-          {displayedRecommendations.slice(0, 5).map((recommendation, index) => (
-            <div
-              key={recommendation.internship.id}
-              className="opacity-0 animate-fade-in"
-              style={{
-                animationDelay: `${index * 200}ms`,
-                animationFillMode: 'forwards'
-              }}
-            >
-              <InternshipCard
-                internship={recommendation.internship}
-                matchScore={recommendation.matchScore}
-                matchReasons={recommendation.matchReasons}
-                onApply={onApply}
-                onViewDetails={onViewDetails}
-              />
+            <div>
+              <h2 className="text-xl font-semibold text-gray-900">
+                Personalized Recommendations
+              </h2>
+              <p className="text-gray-600 text-sm">
+                {recommendations.length} AI-matched internships based on your profile
+              </p>
             </div>
-          ))}
-        </div>
-
-        {/* Load More */}
-        {recommendations.length > 5 && displayedRecommendations.length < recommendations.length && (
-          <div className="text-center pt-6">
-            <Button
-              onClick={() => {
-                const nextBatch = recommendations.slice(displayedRecommendations.length, displayedRecommendations.length + 5);
-                nextBatch.forEach((recommendation, index) => {
-                  setTimeout(() => {
-                    setDisplayedRecommendations(prev => [...prev, recommendation]);
-                  }, index * 200);
-                });
-              }}
-              className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-200"
-            >
-              Load More Recommendations
-            </Button>
           </div>
-        )}
-
-        {/* Footer Info */}
-        <Card className="shadow-lg border-0 bg-white/95 backdrop-blur-sm">
-          <CardContent className="text-center p-6">
-            <div className="flex items-center justify-center gap-2 text-gray-600 mb-2">
-              <Target className="w-4 h-4 text-blue-600" />
-              <span className="text-sm">AI-powered matching technology by Government of India</span>
+          
+          <div className="flex items-center gap-3">
+            <div className="bg-green-50 text-green-700 border border-green-200 px-3 py-1 rounded-md text-sm font-medium">
+              <svg className="w-3 h-3 mr-1 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+              </svg>
+              {recommendations.length} matches
             </div>
-            <p className="text-xs text-gray-500">
-              Recommendations are updated in real-time based on your profile and market trends
-            </p>
-          </CardContent>
-        </Card>
+            <button
+              onClick={onRefresh}
+              className="border-2 border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-blue-500 px-3 py-1 rounded-md transition-colors duration-200"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Statistics Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="bg-white border border-gray-200 rounded-lg shadow-sm p-4 text-center">
+          <div className="flex items-center justify-center gap-2 text-orange-600 mb-2">
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+            </svg>
+            <span className="text-lg font-bold">{recommendations.filter(r => r.matchScore >= 80).length}</span>
+          </div>
+          <p className="text-sm text-gray-600">High Match (80%+)</p>
+        </div>
+        
+        <div className="bg-white border border-gray-200 rounded-lg shadow-sm p-4 text-center">
+          <div className="flex items-center justify-center gap-2 text-blue-600 mb-2">
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20a3 3 0 01-3-3v-2a3 3 0 013-3 3 3 0 013 3v2a3 3 0 01-3 3zm8-10a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+            <span className="text-lg font-bold">{recommendations.reduce((sum, r) => sum + r.internship.no_of_opportunities, 0)}</span>
+          </div>
+          <p className="text-sm text-gray-600">Total Positions</p>
+        </div>
+        
+        <div className="bg-white border border-gray-200 rounded-lg shadow-sm p-4 text-center">
+          <div className="flex items-center justify-center gap-2 text-green-600 mb-2">
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+            </svg>
+            <span className="text-lg font-bold">{Math.round(recommendations.reduce((sum, r) => sum + r.matchScore, 0) / recommendations.length)}%</span>
+          </div>
+          <p className="text-sm text-gray-600">Avg Match Score</p>
+        </div>
+      </div>
+
+      {/* Recommendations Grid - 2x2 Layout */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {displayedRecommendations.slice(0, 4).map((recommendation, index) => (
+          <div
+            key={recommendation.internship.id}
+            className="opacity-0 animate-fade-in"
+            style={{
+              animationDelay: `${index * 150}ms`,
+              animationFillMode: 'forwards'
+            }}
+          >
+            <InternshipCard
+              internship={recommendation.internship}
+              matchScore={recommendation.matchScore}
+              matchReasons={recommendation.matchReasons}
+              onApply={onApply}
+              onViewDetails={onViewDetails}
+            />
+          </div>
+        ))}
+      </div>
+
+      {/* Load More */}
+      {recommendations.length > 4 && displayedRecommendations.length < recommendations.length && (
+        <div className="text-center pt-4">
+          <button
+            onClick={() => {
+              const nextBatch = recommendations.slice(displayedRecommendations.length, displayedRecommendations.length + 4);
+              nextBatch.forEach((recommendation, index) => {
+                setTimeout(() => {
+                  setDisplayedRecommendations(prev => [...prev, recommendation]);
+                }, index * 150);
+              });
+            }}
+            className="bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-2 rounded-md transition-colors duration-200 text-sm"
+          >
+            Load More Recommendations
+          </button>
+        </div>
+      )}
+
+      {/* Footer Info */}
+      <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+        <div className="text-center">
+          <div className="flex items-center justify-center gap-2 text-gray-600 mb-1">
+            <svg className="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span className="text-sm font-medium">AI-powered matching technology by Government of India</span>
+          </div>
+          <p className="text-xs text-gray-500">
+            Recommendations are updated in real-time based on your profile and market trends
+          </p>
+        </div>
       </div>
     </div>
   );
