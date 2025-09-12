@@ -71,7 +71,7 @@ export default function RecommendationList({
             No Recommendations Found
           </h3>
           <p className="text-gray-600 mb-4 text-sm">
-            We couldn't find any internships matching your profile. Try updating your skills or preferences.
+            We couldn&apos;t find any internships matching your profile. Try updating your skills or preferences.
           </p>
           <button
             onClick={onRefresh}
