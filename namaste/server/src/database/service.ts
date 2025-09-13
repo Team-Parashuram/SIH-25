@@ -1,5 +1,5 @@
 import { db } from './client.js';
-import { NAMASTECode, ProcessingStats, WHOCode } from '../generated/prisma/index.js';
+import type { NAMASTECode, ProcessingStats } from '@prisma/client';
 import logger from '../utils/logger.js';
 
 /**
